@@ -4,81 +4,74 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rxjava3.subscribeAsState
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.aitanskillsdemo.data.Entity
 import com.example.aitanskillsdemo.data.FieldRepository
-import androidx.compose.ui.platform.LocalResources
 
-const val SELECTION_TAP_DISTANCE = 40f
+private const val BORDER_STROKE_WIDTH = 3f
+private const val BORDER_COLOR = 0xFF79747EL // Gray
+private const val GRID_COLOR = 0xFFCAC4D0L   // Light gray
 
 @Composable
-fun FieldScene(modifier: Modifier = Modifier) {
-    val repo = remember { FieldRepository() }
-    val version by repo.version.subscribeAsState(0L)
+fun FieldScene(modifier: Modifier = Modifier, viewModel: FieldViewModel = viewModel()) {
+    val version by viewModel.version.subscribeAsState(0L)
 
-    var pan by remember { mutableStateOf(Offset.Zero) }
-
-    val axisColor = MaterialTheme.colorScheme.onSurface
-    val gridColor = MaterialTheme.colorScheme.outlineVariant
-
-    // screen pixels per real life centimeter
-    val pxPerCm = LocalResources.current.displayMetrics.xdpi / 2.54f
+    val pxPerCm = screenPxPerCm()
     val fieldSize = Size(FieldRepository.FIELD_WIDTH * pxPerCm, FieldRepository.FIELD_HEIGHT * pxPerCm)
+    val pan = viewModel.panCm * pxPerCm
 
     Canvas(
         modifier = modifier
             .fillMaxSize()
-            .pointerInput(repo.entities) {
+            .pointerInput(Unit) {
                 detectTapGestures { tap ->
-                    repo.entities.firstOrNull { (it.center(pan, pxPerCm) - tap).getDistance() < SELECTION_TAP_DISTANCE }?.let { entity ->
-                        repo.sendSelection(entity)
-                    }
+                    viewModel.onFieldTapped(screenToField(tap, viewModel.panCm * pxPerCm, pxPerCm))
                 }
             }
             .pointerInput(Unit) {
-                // drag to move around the field, stopping at the field edges
+                // Drag to move around the field, stopping at the field edges
                 detectDragGestures { _, drag ->
-                    pan = Offset(
-                        (pan.x + drag.x).coerceIn(minOf(0f, size.width - fieldSize.width), 0f),
-                        (pan.y + drag.y).coerceIn(minOf(0f, size.height - fieldSize.height), 0f)
-                    )
+                    val newPan = viewModel.panCm * pxPerCm + drag
+                    viewModel.panCm = Offset(
+                        newPan.x.coerceIn(minOf(0f, size.width - fieldSize.width), 0f),
+                        newPan.y.coerceIn(minOf(0f, size.height - fieldSize.height), 0f)
+                    ) / pxPerCm
                 }
             }
     ) {
-        // read version here causing canvas to redraw every field update
+        // Read version here causing canvas to redraw every field update
         version
 
         // 1 cm grid
         for (i in 1..<FieldRepository.FIELD_WIDTH.toInt()) {
-            drawLine(gridColor, Offset(pan.x + i * pxPerCm, pan.y), Offset(pan.x + i * pxPerCm, pan.y + fieldSize.height))
+            val x = pan.x + i * pxPerCm
+            drawLine(Color(GRID_COLOR), Offset(x, pan.y), Offset(x, pan.y + fieldSize.height))
         }
         for (i in 1..<FieldRepository.FIELD_HEIGHT.toInt()) {
-            drawLine(gridColor, Offset(pan.x, pan.y + i * pxPerCm), Offset(pan.x + fieldSize.width, pan.y + i * pxPerCm))
+            val y = pan.y + i * pxPerCm
+            drawLine(Color(GRID_COLOR), Offset(pan.x, y), Offset(pan.x + fieldSize.width, y))
         }
 
         // Field border
-        drawRect(axisColor, topLeft = pan, size = fieldSize, style = Stroke(3f))
+        drawRect(Color(BORDER_COLOR), topLeft = pan, size = fieldSize, style = Stroke(BORDER_STROKE_WIDTH))
 
-        repo.entities.forEach {
-            drawCircle(Color(it.color), radius = 10f, center = it.center(pan, pxPerCm))
+        // Entity size is its diameter or side length in cm
+        viewModel.entities.forEach {
+            val sizePx = it.size * pxPerCm
+            val position = entityScreenPosition(it, pan, pxPerCm)
+            when (it.shape) {
+                Entity.EntityShape.CIRCLE -> drawCircle(Color(it.color), radius = sizePx / 2, center = position)
+                Entity.EntityShape.SQUARE -> drawRect(Color(it.color), topLeft = position - Offset(sizePx / 2, sizePx / 2), size = Size(sizePx, sizePx))
+            }
         }
     }
 }
-
-// Entity position in centimeters to screen pixels, y flipped so it grows upward
-private fun Entity.center(pan: Offset, pxPerCm: Float) = Offset(
-    x = pan.x + xPosition * pxPerCm,
-    y = pan.y + (FieldRepository.FIELD_HEIGHT - yPosition) * pxPerCm
-)

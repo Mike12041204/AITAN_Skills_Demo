@@ -2,18 +2,29 @@ package com.example.aitanskillsdemo.data;
 
 public abstract class Entity {
 
+    public enum EntityShape {
+        CIRCLE,
+        SQUARE
+    }
+
+    private final EntityShape shape;
+    private final float size;
+    private final long unselectedColor;
+    private final long selectedColor;
+
     private float xPosition;
     private float yPosition;
     private boolean selected;
-    private final long unselected_color;
-    private final long selected_color;
 
-    protected Entity(float xPosition, float yPosition, long unselected_color, long selected_color) {
+    protected Entity(float xPosition, float yPosition, long unselectedColor, long selectedColor,
+                     EntityShape shape, float size) {
         this.xPosition = xPosition;
         this.yPosition = yPosition;
-        selected = false;
-        this.unselected_color = unselected_color;
-        this.selected_color = selected_color;
+        this.selected = false;
+        this.unselectedColor = unselectedColor;
+        this.selectedColor = selectedColor;
+        this.shape = shape;
+        this.size = size;
     }
 
     public float getXPosition() {
@@ -24,12 +35,20 @@ public abstract class Entity {
         return yPosition;
     }
 
-    public boolean getSelected() {
+    public boolean isSelected() {
         return selected;
     }
 
     public long getColor() {
-        return selected ? selected_color : unselected_color;
+        return selected ? selectedColor : unselectedColor;
+    }
+
+    public EntityShape getShape() {
+        return shape;
+    }
+
+    public float getSize() {
+        return size;
     }
 
     public void setSelected(boolean selected) {
