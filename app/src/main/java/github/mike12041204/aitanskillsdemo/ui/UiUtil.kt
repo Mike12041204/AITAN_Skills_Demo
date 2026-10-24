@@ -1,10 +1,10 @@
-package com.example.aitanskillsdemo.ui
+package github.mike12041204.aitanskillsdemo.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.platform.LocalResources
-import com.example.aitanskillsdemo.data.Entity
-import com.example.aitanskillsdemo.data.FieldRepository
+import github.mike12041204.aitanskillsdemo.data.Entity
+import github.mike12041204.aitanskillsdemo.data.FieldRepository
 
 private const val CM_PER_INCH = 2.54f
 

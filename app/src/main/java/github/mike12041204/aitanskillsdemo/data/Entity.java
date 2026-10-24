@@ -1,4 +1,4 @@
-package com.example.aitanskillsdemo.data;
+package github.mike12041204.aitanskillsdemo.data;
 
 public abstract class Entity {
 

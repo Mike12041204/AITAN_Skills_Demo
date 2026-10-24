@@ -1,4 +1,4 @@
-package com.example.aitanskillsdemo.ui
+package github.mike12041204.aitanskillsdemo.ui
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectDragGestures
@@ -14,8 +14,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.aitanskillsdemo.data.Entity
-import com.example.aitanskillsdemo.data.FieldRepository
+import github.mike12041204.aitanskillsdemo.data.Entity
+import github.mike12041204.aitanskillsdemo.data.FieldRepository
 
 private const val BORDER_STROKE_WIDTH = 3f
 private const val BORDER_COLOR = 0xFF79747EL // Gray

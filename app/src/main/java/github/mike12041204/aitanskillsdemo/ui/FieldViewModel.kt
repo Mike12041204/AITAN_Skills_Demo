@@ -1,12 +1,12 @@
-package com.example.aitanskillsdemo.ui
+package github.mike12041204.aitanskillsdemo.ui
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.geometry.Offset
 import androidx.lifecycle.ViewModel
-import com.example.aitanskillsdemo.data.Entity
-import com.example.aitanskillsdemo.data.FieldRepository
+import github.mike12041204.aitanskillsdemo.data.Entity
+import github.mike12041204.aitanskillsdemo.data.FieldRepository
 import io.reactivex.rxjava3.core.Observable
 
 // Smallest tap radius in cm so tiny entities are still easy to hit

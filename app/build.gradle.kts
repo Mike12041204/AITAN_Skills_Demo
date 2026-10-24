@@ -4,13 +4,13 @@ plugins {
 }
 
 android {
-    namespace = "com.example.aitanskillsdemo"
+    namespace = "github.mike12041204.aitanskillsdemo"
     compileSdk {
         version = release(37)
     }
 
     defaultConfig {
-        applicationId = "com.example.aitanskillsdemo"
+        applicationId = "github.mike12041204.aitanskillsdemo"
         minSdk = 24
         targetSdk = 37
         versionCode = 1

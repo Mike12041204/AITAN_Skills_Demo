@@ -1,4 +1,4 @@
-package com.example.aitanskillsdemo.ui.theme
+package github.mike12041204.aitanskillsdemo.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
