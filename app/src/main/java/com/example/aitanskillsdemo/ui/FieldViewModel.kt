@@ -26,7 +26,10 @@ class FieldViewModel : ViewModel() {
     // Point is in field cm
     fun onFieldTapped(point: Offset) {
         entities.firstOrNull {
-            (Offset(it.xPosition, it.yPosition) - point).getDistance() <= maxOf(it.size / 2, MIN_TAP_RADIUS_CM)
+            (Offset(it.xPosition, it.yPosition) - point).getDistance() <= maxOf(
+                it.size / 2,
+                MIN_TAP_RADIUS_CM
+            )
         }?.let { repo.toggleSelection(it) }
     }
 }

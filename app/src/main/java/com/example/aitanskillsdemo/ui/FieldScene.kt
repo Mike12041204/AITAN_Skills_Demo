@@ -26,7 +26,8 @@ fun FieldScene(modifier: Modifier = Modifier, viewModel: FieldViewModel = viewMo
     val version by viewModel.version.subscribeAsState(0L)
 
     val pxPerCm = screenPxPerCm()
-    val fieldSize = Size(FieldRepository.FIELD_WIDTH * pxPerCm, FieldRepository.FIELD_HEIGHT * pxPerCm)
+    val fieldSize =
+        Size(FieldRepository.FIELD_WIDTH * pxPerCm, FieldRepository.FIELD_HEIGHT * pxPerCm)
     val pan = viewModel.panCm * pxPerCm
 
     Canvas(
@@ -62,15 +63,29 @@ fun FieldScene(modifier: Modifier = Modifier, viewModel: FieldViewModel = viewMo
         }
 
         // Field border
-        drawRect(Color(BORDER_COLOR), topLeft = pan, size = fieldSize, style = Stroke(BORDER_STROKE_WIDTH))
+        drawRect(
+            Color(BORDER_COLOR),
+            topLeft = pan,
+            size = fieldSize,
+            style = Stroke(BORDER_STROKE_WIDTH)
+        )
 
         // Entity size is its diameter or side length in cm
         viewModel.entities.forEach {
             val sizePx = it.size * pxPerCm
             val position = entityScreenPosition(it, pan, pxPerCm)
             when (it.shape) {
-                Entity.EntityShape.CIRCLE -> drawCircle(Color(it.color), radius = sizePx / 2, center = position)
-                Entity.EntityShape.SQUARE -> drawRect(Color(it.color), topLeft = position - Offset(sizePx / 2, sizePx / 2), size = Size(sizePx, sizePx))
+                Entity.EntityShape.CIRCLE -> drawCircle(
+                    Color(it.color),
+                    radius = sizePx / 2,
+                    center = position
+                )
+
+                Entity.EntityShape.SQUARE -> drawRect(
+                    Color(it.color),
+                    topLeft = position - Offset(sizePx / 2, sizePx / 2),
+                    size = Size(sizePx, sizePx)
+                )
             }
         }
     }
