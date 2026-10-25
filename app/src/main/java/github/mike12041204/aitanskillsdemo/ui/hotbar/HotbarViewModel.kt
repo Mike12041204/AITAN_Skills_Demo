@@ -14,8 +14,9 @@ class HotbarViewModel : ViewModel() {
     // Commands for the drones on the same field the FieldViewModel uses
     private val droneCommands = AppContainer.droneCommands
 
-    // Last fail message, and a count that goes up each time so the same message can show again
-    var message by mutableStateOf("")
+    // String resource of the last fail message, null until a button fails
+    // The count goes up each time so the same message can show again
+    var message by mutableStateOf<Int?>(null)
         private set
     var messageCount by mutableIntStateOf(0)
         private set
@@ -24,36 +25,36 @@ class HotbarViewModel : ViewModel() {
     val actions = listOf(
         HotbarAction(
             icon = R.drawable.ic_straight_attack,
-            description = "Straight attack",
-            failMessage = "Select one or more drones and one target",
+            description = R.string.hotbar_straight_attack,
+            failMessage = R.string.hotbar_straight_attack_fail,
             condition = { droneCommands.canStraightAttack() },
             onClick = { droneCommands.straightAttack() }
         ),
         HotbarAction(
             icon = R.drawable.ic_evasive_attack,
-            description = "Evasive attack",
-            failMessage = "Select one or more drones and one target",
+            description = R.string.hotbar_evasive_attack,
+            failMessage = R.string.hotbar_evasive_attack_fail,
             condition = { droneCommands.canEvasiveAttack() },
             onClick = { droneCommands.evasiveAttack() }
         ),
         HotbarAction(
             icon = R.drawable.ic_coordinated_attack,
-            description = "Coordinated attack",
-            failMessage = "Select one or more drones and one target",
+            description = R.string.hotbar_coordinated_attack,
+            failMessage = R.string.hotbar_coordinated_attack_fail,
             condition = { droneCommands.canCoordinatedAttack() },
             onClick = { droneCommands.coordinatedAttack() }
         ),
         HotbarAction(
             icon = R.drawable.ic_patrol,
-            description = "Patrol",
-            failMessage = "Select one or more drones",
+            description = R.string.hotbar_patrol,
+            failMessage = R.string.hotbar_patrol_fail,
             condition = { droneCommands.canPatrol() },
             onClick = { droneCommands.patrol() }
         ),
         HotbarAction(
             icon = R.drawable.ic_cancel,
-            description = "Cancel",
-            failMessage = "Select one or more drones",
+            description = R.string.hotbar_cancel,
+            failMessage = R.string.hotbar_cancel_fail,
             condition = { droneCommands.canCancel() },
             onClick = { droneCommands.cancel() }
         )

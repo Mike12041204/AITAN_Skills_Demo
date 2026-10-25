@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">AITAN Skills Demo</string>
+
+    <!-- Hotbar button names, read out by screen readers -->
+    <string name="hotbar_straight_attack">Straight attack</string>
+    <string name="hotbar_evasive_attack">Evasive attack</string>
+    <string name="hotbar_coordinated_attack">Coordinated attack</string>
+    <string name="hotbar_patrol">Patrol</string>
+    <string name="hotbar_cancel">Cancel</string>
+
+    <!-- Hotbar messages shown when a button's condition is not met -->
+    <string name="hotbar_straight_attack_fail">Select one or more drones and one target</string>
+    <string name="hotbar_evasive_attack_fail">Select one or more drones and one target</string>
+    <string name="hotbar_coordinated_attack_fail">Select one or more drones and one target</string>
+    <string name="hotbar_patrol_fail">Select one or more drones</string>
+    <string name="hotbar_cancel_fail">Select one or more drones</string>
 </resources>

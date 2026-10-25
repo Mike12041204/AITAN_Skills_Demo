@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
@@ -55,12 +56,16 @@ fun HotbarScene(modifier: Modifier = Modifier, viewModel: HotbarViewModel = view
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(cmToDp(BUTTON_SPACING_CM))
     ) {
-        HotbarMessage(viewModel.message, viewModel.messageCount)
+        // Empty until a button fails, the message is transparent then anyway
+        val message = viewModel.message?.let { stringResource(it) } ?: ""
+        HotbarMessage(message, viewModel.messageCount)
 
         Row(
             horizontalArrangement = Arrangement.spacedBy(cmToDp(BUTTON_SPACING_CM))
         ) {
-            viewModel.actions.forEach { HotbarButton(it, viewModel) }
+            viewModel.actions.forEach { action ->
+                HotbarButton(action, onTapped = { viewModel.onActionTapped(action) })
+            }
         }
     }
 }
@@ -90,8 +95,9 @@ private fun HotbarMessage(message: String, messageCount: Int) {
 }
 
 // One square button that flashes blue if its action ran or red if it didn't
+// onTapped returns true if the action ran
 @Composable
-private fun HotbarButton(action: HotbarAction, viewModel: HotbarViewModel) {
+private fun HotbarButton(action: HotbarAction, onTapped: () -> Boolean) {
     // Each button gets its own background color so only the tapped one flashes
     val background = remember { Animatable(BUTTON_COLOR) }
     val scope = rememberCoroutineScope()
@@ -103,7 +109,7 @@ private fun HotbarButton(action: HotbarAction, viewModel: HotbarViewModel) {
             .border(cmToDp(BUTTON_BORDER_WIDTH_CM), BUTTON_BORDER_COLOR)
             .clickable {
                 // Runs the action if its condition is met, otherwise shows its fail message
-                val actionRan = viewModel.onActionTapped(action)
+                val actionRan = onTapped()
 
                 val flashColor: Color
 
@@ -123,7 +129,7 @@ private fun HotbarButton(action: HotbarAction, viewModel: HotbarViewModel) {
     ) {
         Image(
             painter = painterResource(action.icon),
-            contentDescription = action.description
+            contentDescription = stringResource(action.description)
         )
     }
 }
