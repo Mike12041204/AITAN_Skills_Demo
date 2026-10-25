@@ -32,7 +32,7 @@ public final class FieldRepository {
     // Entities are changed in place, the data layer gets a read only list and the UI only gets read only views
     private final List<Entity> entities;
     private final List<Entity> readOnlyEntities;
-    private final List<EntityView> entityViews;
+    private final List<EntityView> readOnlyEntityViews;
     // Goes up on every change so the UI knows to redraw
     private long version;
     private final BehaviorSubject<Long> versionStream;
@@ -43,7 +43,7 @@ public final class FieldRepository {
         this.versionStream = BehaviorSubject.createDefault(0L);
         this.entities = new ArrayList<>();
         this.readOnlyEntities = Collections.unmodifiableList(entities);
-        this.entityViews = Collections.unmodifiableList(entities);
+        this.readOnlyEntityViews = Collections.unmodifiableList(entities);
 
         for (int i = 0; i < NUMBER_OF_TARGETS; i++) {
             entities.add(new Target(randomStartPositionCm()));
@@ -69,7 +69,7 @@ public final class FieldRepository {
 
     // Every entity on the field as read only views, for the UI
     public List<EntityView> getEntityViews() {
-        return entityViews;
+        return readOnlyEntityViews;
     }
 
     // Every entity on the field, for the data layer only, the UI uses getEntityViews
