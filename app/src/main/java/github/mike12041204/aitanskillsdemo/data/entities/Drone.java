@@ -1,13 +1,14 @@
 package github.mike12041204.aitanskillsdemo.data.entities;
 
 import androidx.annotation.Nullable;
+
+import java.util.List;
+import java.util.Objects;
+
 import github.mike12041204.aitanskillsdemo.data.DataUtil;
 import github.mike12041204.aitanskillsdemo.data.field.PointCm;
 import github.mike12041204.aitanskillsdemo.data.path.DronePath;
 import github.mike12041204.aitanskillsdemo.data.path.StraightPath;
-
-import java.util.List;
-import java.util.Objects;
 
 // Moves around the field following commands, many drones can be selected at once
 // The command types and patrol discover distance are in DroneView so the UI can read them

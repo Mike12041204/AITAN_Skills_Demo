@@ -1,5 +1,9 @@
 package github.mike12041204.aitanskillsdemo.data.field;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import github.mike12041204.aitanskillsdemo.data.DataUtil;
 import github.mike12041204.aitanskillsdemo.data.entities.Drone;
 import github.mike12041204.aitanskillsdemo.data.entities.Entity;
@@ -7,10 +11,6 @@ import github.mike12041204.aitanskillsdemo.data.entities.EntityView;
 import github.mike12041204.aitanskillsdemo.data.entities.Target;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 // Owns every entity on the field and all the rules for changing them
 public final class FieldRepository {

@@ -1,12 +1,12 @@
 package github.mike12041204.aitanskillsdemo.data.path;
 
-import github.mike12041204.aitanskillsdemo.data.DataUtil;
-import github.mike12041204.aitanskillsdemo.data.field.FieldRepository;
-import github.mike12041204.aitanskillsdemo.data.field.PointCm;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import github.mike12041204.aitanskillsdemo.data.DataUtil;
+import github.mike12041204.aitanskillsdemo.data.field.FieldRepository;
+import github.mike12041204.aitanskillsdemo.data.field.PointCm;
 
 // Route a drone follows, built once when a command is given
 // The drone moves along it each frame and the UI draws the same route

@@ -1,8 +1,8 @@
 package github.mike12041204.aitanskillsdemo.data.entities;
 
-import github.mike12041204.aitanskillsdemo.data.field.PointCm;
-
 import java.util.List;
+
+import github.mike12041204.aitanskillsdemo.data.field.PointCm;
 
 // What drones attack, only one target can be selected at a time
 // The command types are in TargetView so the UI can read them

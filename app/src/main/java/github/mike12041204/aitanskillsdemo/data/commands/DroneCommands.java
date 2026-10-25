@@ -1,6 +1,10 @@
 package github.mike12041204.aitanskillsdemo.data.commands;
 
 import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import github.mike12041204.aitanskillsdemo.data.entities.Drone;
 import github.mike12041204.aitanskillsdemo.data.entities.Entity;
 import github.mike12041204.aitanskillsdemo.data.entities.Target;
@@ -8,9 +12,6 @@ import github.mike12041204.aitanskillsdemo.data.field.FieldRepository;
 import github.mike12041204.aitanskillsdemo.data.path.EvasivePath;
 import github.mike12041204.aitanskillsdemo.data.path.PatrolPath;
 import github.mike12041204.aitanskillsdemo.data.path.StraightPath;
-
-import java.util.ArrayList;
-import java.util.List;
 
 // Orders that can be given to the selected drones, each command has a condition that must be true first
 public final class DroneCommands {

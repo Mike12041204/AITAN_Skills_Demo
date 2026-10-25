@@ -29,14 +29,9 @@ import androidx.compose.ui.semantics.semantics
 import androidx.lifecycle.viewmodel.compose.viewModel
 import github.mike12041204.aitanskillsdemo.ui.cmToDp
 import github.mike12041204.aitanskillsdemo.ui.theme.HOTBAR_BUTTON_BORDER_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.HOTBAR_BUTTON_BORDER_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.HOTBAR_BUTTON_COLOR
 import github.mike12041204.aitanskillsdemo.ui.theme.HOTBAR_BUTTON_COLOR
 import github.mike12041204.aitanskillsdemo.ui.theme.HOTBAR_BUTTON_FAIL_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.HOTBAR_BUTTON_FAIL_COLOR
 import github.mike12041204.aitanskillsdemo.ui.theme.HOTBAR_BUTTON_FLASH_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.HOTBAR_BUTTON_FLASH_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.HOTBAR_MESSAGE_COLOR
 import github.mike12041204.aitanskillsdemo.ui.theme.HOTBAR_MESSAGE_COLOR
 import kotlinx.coroutines.launch
 

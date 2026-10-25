@@ -31,40 +31,8 @@ import github.mike12041204.aitanskillsdemo.ui.fieldCmToPx
 import github.mike12041204.aitanskillsdemo.ui.fieldPxToCm
 import github.mike12041204.aitanskillsdemo.ui.screenPxPerCm
 import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_BORDER_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_BORDER_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_BORDER_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_BORDER_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_BORDER_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_BORDER_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_BORDER_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_BORDER_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_BORDER_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_DISCOVER_RANGE_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_DISCOVER_RANGE_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_DISCOVER_RANGE_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_DISCOVER_RANGE_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_DISCOVER_RANGE_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_DISCOVER_RANGE_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_DISCOVER_RANGE_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_DISCOVER_RANGE_COLOR
 import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_DISCOVER_RANGE_COLOR
 import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_GRID_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_GRID_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_GRID_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_GRID_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_GRID_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_GRID_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_GRID_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_GRID_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_GRID_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_PATH_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_PATH_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_PATH_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_PATH_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_PATH_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_PATH_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_PATH_COLOR
-import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_PATH_COLOR
 import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_PATH_COLOR
 import github.mike12041204.aitanskillsdemo.ui.toOffset
 
@@ -128,7 +96,8 @@ fun FieldScene(modifier: Modifier = Modifier, viewModel: FieldViewModel = viewMo
         drawGrid(pan, fieldSize, pxPerCm)
 
         // Commands first so entities are drawn on top of them
-        viewModel.entities.filterIsInstance<DroneView>().forEach { drawDroneCommand(it, pan, pxPerCm) }
+        viewModel.entities.filterIsInstance<DroneView>()
+            .forEach { drawDroneCommand(it, pan, pxPerCm) }
         viewModel.entities.forEach { drawEntity(it, pan, pxPerCm, icons) }
     }
 }
@@ -212,7 +181,12 @@ private fun isBlinkedOff(explodingSeconds: Float): Boolean {
 }
 
 // Draws each kind of entity in its own look
-private fun DrawScope.drawEntity(entity: EntityView, pan: Offset, pxPerCm: Float, icons: EntityIcons) {
+private fun DrawScope.drawEntity(
+    entity: EntityView,
+    pan: Offset,
+    pxPerCm: Float,
+    icons: EntityIcons
+) {
     // Exploding entities blink, nothing is drawn during the hidden half of each blink
     if (entity.isExploding && isBlinkedOff(entity.explodingSeconds)) {
         return
@@ -246,7 +220,12 @@ private fun DrawScope.drawDrone(drone: DroneView, pan: Offset, pxPerCm: Float, i
 }
 
 // Rectangle icon, the target's size in cm is the width and the height keeps the image's shape
-private fun DrawScope.drawTarget(target: TargetView, pan: Offset, pxPerCm: Float, icons: EntityIcons) {
+private fun DrawScope.drawTarget(
+    target: TargetView,
+    pan: Offset,
+    pxPerCm: Float,
+    icons: EntityIcons
+) {
     val painter: Painter
 
     if (target.isSelected) {

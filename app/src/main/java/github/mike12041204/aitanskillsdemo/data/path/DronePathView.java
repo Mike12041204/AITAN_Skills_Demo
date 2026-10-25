@@ -1,8 +1,8 @@
 package github.mike12041204.aitanskillsdemo.data.path;
 
-import github.mike12041204.aitanskillsdemo.data.field.PointCm;
-
 import java.util.List;
+
+import github.mike12041204.aitanskillsdemo.data.field.PointCm;
 
 // Read only view of a drone's path for the UI
 public interface DronePathView {
