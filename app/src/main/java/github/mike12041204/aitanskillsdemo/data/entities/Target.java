@@ -5,12 +5,8 @@ import github.mike12041204.aitanskillsdemo.data.field.PointCm;
 import java.util.List;
 
 // What drones attack, only one target can be selected at a time
-public final class Target extends Entity {
-
-    // What the target is currently doing, placeholder until targets get commands of their own
-    public enum TargetCommand {
-        NONE
-    }
+// The command types are in TargetView so the UI can read them
+public final class Target extends Entity implements TargetView {
 
     // Real-life size of a target in cm
     private static final float SIZE_CM = 0.5f;
@@ -28,6 +24,7 @@ public final class Target extends Entity {
         this.command = TargetCommand.NONE;
     }
 
+    @Override
     public TargetCommand getCommand() {
         return command;
     }

@@ -10,7 +10,7 @@ import java.util.List;
 
 // Route a drone follows, built once when a command is given
 // The drone moves along it each frame and the UI draws the same route
-public abstract class DronePath {
+public abstract class DronePath implements DronePathView {
 
     // Points in field cm the drone moves through, in order, the first one is where the drone started
     private final List<PointCm> points;
@@ -32,6 +32,7 @@ public abstract class DronePath {
         this.distanceTraveledCm = 0f;
     }
 
+    @Override
     public float getDistanceTraveledCm() {
         return distanceTraveledCm;
     }
@@ -92,6 +93,7 @@ public abstract class DronePath {
 
     // Points the drone has not reached yet, in order, for drawing the rest of the path
     // A looping path wraps around so the whole loop is always shown
+    @Override
     public List<PointCm> getRemainingPoints() {
         List<PointCm> remaining = new ArrayList<>();
 

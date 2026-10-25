@@ -24,9 +24,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.toSize
 import androidx.lifecycle.viewmodel.compose.viewModel
 import github.mike12041204.aitanskillsdemo.R
-import github.mike12041204.aitanskillsdemo.data.entities.Drone
-import github.mike12041204.aitanskillsdemo.data.entities.Entity
-import github.mike12041204.aitanskillsdemo.data.entities.Target
+import github.mike12041204.aitanskillsdemo.data.entities.DroneView
+import github.mike12041204.aitanskillsdemo.data.entities.EntityView
+import github.mike12041204.aitanskillsdemo.data.entities.TargetView
 import github.mike12041204.aitanskillsdemo.data.field.FieldRepository
 import github.mike12041204.aitanskillsdemo.ui.fieldCmToPx
 import github.mike12041204.aitanskillsdemo.ui.fieldPxToCm
@@ -97,7 +97,7 @@ fun FieldScene(modifier: Modifier = Modifier, viewModel: FieldViewModel = viewMo
         drawGrid(pan, fieldSize, pxPerCm)
 
         // Commands first so entities are drawn on top of them
-        viewModel.entities.filterIsInstance<Drone>().forEach { drawDroneCommand(it, pan, pxPerCm) }
+        viewModel.entities.filterIsInstance<DroneView>().forEach { drawDroneCommand(it, pan, pxPerCm) }
         viewModel.entities.forEach { drawEntity(it, pan, pxPerCm, icons) }
     }
 }
@@ -125,8 +125,8 @@ private fun DrawScope.drawGrid(pan: Offset, fieldSize: Size, pxPerCm: Float) {
 }
 
 // Shows the part of the drone's path it has not reached yet, patrolling drones also show their discover range
-private fun DrawScope.drawDroneCommand(drone: Drone, pan: Offset, pxPerCm: Float) {
-    if (drone.command == Drone.DroneCommand.PATROL) {
+private fun DrawScope.drawDroneCommand(drone: DroneView, pan: Offset, pxPerCm: Float) {
+    if (drone.command == DroneView.DroneCommand.PATROL) {
         drawDiscoverRange(drone, pan, pxPerCm)
     }
 
@@ -134,17 +134,17 @@ private fun DrawScope.drawDroneCommand(drone: Drone, pan: Offset, pxPerCm: Float
 }
 
 // Light grey ring showing how close a target has to be for a patrolling drone to attack it
-private fun DrawScope.drawDiscoverRange(drone: Drone, pan: Offset, pxPerCm: Float) {
+private fun DrawScope.drawDiscoverRange(drone: DroneView, pan: Offset, pxPerCm: Float) {
     drawCircle(
         DISCOVER_RANGE_COLOR,
-        radius = Drone.PATROL_DISCOVER_DISTANCE_CM * pxPerCm,
+        radius = DroneView.PATROL_DISCOVER_DISTANCE_CM * pxPerCm,
         center = fieldCmToPx(drone.positionCm.toOffset(), pan, pxPerCm),
         style = Stroke(PATH_STROKE_WIDTH_CM * pxPerCm)
     )
 }
 
 // Dotted line from the drone through every point of its path it has not reached yet
-private fun DrawScope.drawRemainingPath(drone: Drone, pan: Offset, pxPerCm: Float) {
+private fun DrawScope.drawRemainingPath(drone: DroneView, pan: Offset, pxPerCm: Float) {
     val dronePath = drone.path ?: return
 
     // The dots start as far into their pattern as the drone has traveled, so they stay still on the field
@@ -181,20 +181,20 @@ private fun isBlinkedOff(explodingSeconds: Float): Boolean {
 }
 
 // Draws each kind of entity in its own look
-private fun DrawScope.drawEntity(entity: Entity, pan: Offset, pxPerCm: Float, icons: EntityIcons) {
+private fun DrawScope.drawEntity(entity: EntityView, pan: Offset, pxPerCm: Float, icons: EntityIcons) {
     // Exploding entities blink, nothing is drawn during the hidden half of each blink
     if (entity.isExploding && isBlinkedOff(entity.explodingSeconds)) {
         return
     }
 
     when (entity) {
-        is Drone -> drawDrone(entity, pan, pxPerCm, icons)
-        is Target -> drawTarget(entity, pan, pxPerCm, icons)
+        is DroneView -> drawDrone(entity, pan, pxPerCm, icons)
+        is TargetView -> drawTarget(entity, pan, pxPerCm, icons)
     }
 }
 
 // Diamond icon, the drone's size in cm is used for both the width and height
-private fun DrawScope.drawDrone(drone: Drone, pan: Offset, pxPerCm: Float, icons: EntityIcons) {
+private fun DrawScope.drawDrone(drone: DroneView, pan: Offset, pxPerCm: Float, icons: EntityIcons) {
     val painter: Painter
 
     if (drone.isSelected) {
@@ -215,7 +215,7 @@ private fun DrawScope.drawDrone(drone: Drone, pan: Offset, pxPerCm: Float, icons
 }
 
 // Rectangle icon, the target's size in cm is the width and the height keeps the image's shape
-private fun DrawScope.drawTarget(target: Target, pan: Offset, pxPerCm: Float, icons: EntityIcons) {
+private fun DrawScope.drawTarget(target: TargetView, pan: Offset, pxPerCm: Float, icons: EntityIcons) {
     val painter: Painter
 
     if (target.isSelected) {

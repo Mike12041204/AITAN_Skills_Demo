@@ -5,7 +5,7 @@ import github.mike12041204.aitanskillsdemo.data.field.PointCm;
 import java.util.List;
 
 // Anything that sits on the field, subclasses decide the size, speed and explode time, how it looks is up to the UI
-public abstract class Entity {
+public abstract class Entity implements EntityView {
 
     // Set once by the subclass and never change
     private final float sizeCm;
@@ -33,26 +33,32 @@ public abstract class Entity {
         this.explodeDurationSeconds = explodeDurationSeconds;
     }
 
+    @Override
     public PointCm getPositionCm() {
         return positionCm;
     }
 
+    @Override
     public boolean isSelected() {
         return selected;
     }
 
+    @Override
     public float getSizeCm() {
         return sizeCm;
     }
 
+    @Override
     public float getSpeedCmPerSecond() {
         return speedCmPerSecond;
     }
 
+    @Override
     public boolean isExploding() {
         return exploding;
     }
 
+    @Override
     public float getExplodingSeconds() {
         return explodingSeconds;
     }

@@ -3,6 +3,7 @@ package github.mike12041204.aitanskillsdemo.data.field;
 import github.mike12041204.aitanskillsdemo.data.DataUtil;
 import github.mike12041204.aitanskillsdemo.data.entities.Drone;
 import github.mike12041204.aitanskillsdemo.data.entities.Entity;
+import github.mike12041204.aitanskillsdemo.data.entities.EntityView;
 import github.mike12041204.aitanskillsdemo.data.entities.Target;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
@@ -33,9 +34,10 @@ public final class FieldRepository {
     private long version;
     private final BehaviorSubject<Long> versionStream;
 
-    // Entities are changed in place, the UI only ever gets the read only view
+    // Entities are changed in place, the data layer gets a read only list and the UI only gets read only views
     private final List<Entity> entities;
     private final List<Entity> readOnlyEntities;
+    private final List<EntityView> entityViews;
 
     // Starts the field with random targets and drones inside the allowed start area
     public FieldRepository() {
@@ -43,6 +45,7 @@ public final class FieldRepository {
         this.versionStream = BehaviorSubject.createDefault(0L);
         this.entities = new ArrayList<>();
         this.readOnlyEntities = Collections.unmodifiableList(entities);
+        this.entityViews = Collections.unmodifiableList(entities);
 
         for (int i = 0; i < NUMBER_OF_TARGETS; i++) {
             entities.add(new Target(randomStartPositionCm()));
@@ -66,12 +69,20 @@ public final class FieldRepository {
         return versionStream;
     }
 
+    // Every entity on the field as read only views, for the UI
+    public List<EntityView> getEntityViews() {
+        return entityViews;
+    }
+
+    // Every entity on the field, for the data layer only, the UI uses getEntityViews
     public List<Entity> getEntities() {
         return readOnlyEntities;
     }
 
     // Selects an unselected entity or unselects a selected one
-    public void toggleSelection(Entity entity) {
+    // Takes a view because the UI only has views, every view on the field is one of its entities
+    public void toggleSelection(EntityView entityView) {
+        Entity entity = (Entity) entityView;
         entity.setSelected(!entity.isSelected());
 
         // Only one target can be selected at a time

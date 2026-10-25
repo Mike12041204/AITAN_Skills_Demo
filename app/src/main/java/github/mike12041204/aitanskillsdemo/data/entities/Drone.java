@@ -10,18 +10,8 @@ import java.util.List;
 import java.util.Objects;
 
 // Moves around the field following commands, many drones can be selected at once
-public final class Drone extends Entity {
-
-    // What the drone is currently ordered to do
-    public enum DroneCommand {
-        NONE,
-        STRAIGHT_ATTACK,
-        EVASIVE_ATTACK,
-        PATROL
-    }
-
-    // A patrolling drone straight attacks the closest target that comes within this distance
-    public static final float PATROL_DISCOVER_DISTANCE_CM = 2.75f;
+// The command types and patrol discover distance are in DroneView so the UI can read them
+public final class Drone extends Entity implements DroneView {
 
     // Real-life size of a drone in cm
     private static final float SIZE_CM = 0.5f;
@@ -48,6 +38,7 @@ public final class Drone extends Entity {
         this.path = null;
     }
 
+    @Override
     public DroneCommand getCommand() {
         return command;
     }
@@ -57,6 +48,7 @@ public final class Drone extends Entity {
     }
 
     @Nullable
+    @Override
     public Target getCommandTarget() {
         return commandTarget;
     }
@@ -66,6 +58,7 @@ public final class Drone extends Entity {
     }
 
     @Nullable
+    @Override
     public DronePath getPath() {
         return path;
     }

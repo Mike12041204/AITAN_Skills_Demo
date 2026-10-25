@@ -7,7 +7,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.lifecycle.ViewModel
 import github.mike12041204.aitanskillsdemo.AppContainer
-import github.mike12041204.aitanskillsdemo.data.entities.Entity
+import github.mike12041204.aitanskillsdemo.data.entities.EntityView
 import github.mike12041204.aitanskillsdemo.data.field.FieldRepository
 import github.mike12041204.aitanskillsdemo.ui.toOffset
 import io.reactivex.rxjava3.core.Observable
@@ -24,7 +24,7 @@ class FieldViewModel : ViewModel() {
     val version: Observable<Long> = repo.version
 
     // Every entity on the field, read only
-    val entities: List<Entity> get() = repo.entities
+    val entities: List<EntityView> get() = repo.entityViews
 
     // How far the field is dragged, in cm, so the view stays put across rotations
     var panCm by mutableStateOf(Offset.Zero)
@@ -56,7 +56,7 @@ class FieldViewModel : ViewModel() {
     }
 
     // Distance in cm from the center of the entity to the point
-    private fun distanceCm(entity: Entity, point: Offset): Float {
+    private fun distanceCm(entity: EntityView, point: Offset): Float {
         return (entity.positionCm.toOffset() - point).getDistance()
     }
 }
