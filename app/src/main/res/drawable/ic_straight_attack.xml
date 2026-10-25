@@ -17,9 +17,9 @@
 
     <!-- Solid straight line -->
     <path
-        android:strokeColor="#616161"
+        android:pathData="M20,20 L70,70"
         android:strokeWidth="3"
+        android:strokeColor="#616161"
         android:strokeLineCap="round"
-        android:strokeLineJoin="round"
-        android:pathData="M20,20 L70,70" />
+        android:strokeLineJoin="round" />
 </vector>

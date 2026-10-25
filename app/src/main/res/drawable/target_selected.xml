@@ -8,13 +8,13 @@
     <!-- Box, inset by half the line width so the outline is not cut off at the edges -->
     <path
         android:fillColor="#FB8C00"
-        android:strokeColor="#FFCC80"
+        android:pathData="M10,10 L590,10 L590,390 L10,390 Z"
         android:strokeWidth="20"
-        android:pathData="M10,10 L590,10 L590,390 L10,390 Z" />
+        android:strokeColor="#FFCC80" />
 
     <!-- X from corner to corner -->
     <path
-        android:strokeColor="#FFCC80"
+        android:pathData="M10,10 L590,390 M590,10 L10,390"
         android:strokeWidth="20"
-        android:pathData="M10,10 L590,390 M590,10 L10,390" />
+        android:strokeColor="#FFCC80" />
 </vector>

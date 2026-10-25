@@ -22,10 +22,8 @@ public final class SimulationClock {
     private static final float FRAME_DURATION_SECONDS = (float) FRAME_DURATION_US / MICROSECONDS_PER_SECOND;
 
     private final FieldRepository fieldRepo;
-
     // The running ticks, null while the clock is stopped
     private Disposable ticks;
-
     // Frames run since the app started, keeps counting after a stop and start
     private long frameCount;
     private final BehaviorSubject<Long> frameCountStream;

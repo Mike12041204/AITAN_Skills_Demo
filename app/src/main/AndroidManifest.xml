@@ -13,8 +13,8 @@
         <activity
             android:name="github.mike12041204.aitanskillsdemo.MainActivity"
             android:exported="true"
-            android:launchMode="singleTask"
             android:label="@string/app_name"
+            android:launchMode="singleTask"
             android:theme="@style/Theme.AITANSkillsDemo"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>

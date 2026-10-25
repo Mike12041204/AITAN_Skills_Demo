@@ -7,17 +7,17 @@
 
     <!-- Diamond around the eye -->
     <path
-        android:strokeColor="#616161"
+        android:pathData="M50,7 L93,50 L50,93 L7,50 Z"
         android:strokeWidth="6"
-        android:strokeLineJoin="round"
-        android:pathData="M50,7 L93,50 L50,93 L7,50 Z" />
+        android:strokeColor="#616161"
+        android:strokeLineJoin="round" />
 
     <!-- Almond shaped outline of the eye -->
     <path
-        android:strokeColor="#616161"
+        android:pathData="M22,50 Q50,22 78,50 Q50,78 22,50 Z"
         android:strokeWidth="6"
-        android:strokeLineJoin="round"
-        android:pathData="M22,50 Q50,22 78,50 Q50,78 22,50 Z" />
+        android:strokeColor="#616161"
+        android:strokeLineJoin="round" />
 
     <!-- Pupil -->
     <path

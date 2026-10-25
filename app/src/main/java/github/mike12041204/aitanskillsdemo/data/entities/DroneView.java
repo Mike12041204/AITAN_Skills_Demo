@@ -10,14 +10,6 @@ public interface DroneView extends EntityView {
     // A patrolling drone straight attacks the closest target that comes within this distance
     float PATROL_DISCOVER_DISTANCE_CM = 2.75f;
 
-    // What the drone is currently ordered to do
-    enum DroneCommand {
-        NONE,
-        STRAIGHT_ATTACK,
-        EVASIVE_ATTACK,
-        PATROL
-    }
-
     DroneCommand getCommand();
 
     // Null when the command has no target
@@ -27,4 +19,12 @@ public interface DroneView extends EntityView {
     // Null when the drone has no command
     @Nullable
     DronePathView getPath();
+
+    // What the drone is currently ordered to do
+    enum DroneCommand {
+        NONE,
+        STRAIGHT_ATTACK,
+        EVASIVE_ATTACK,
+        PATROL
+    }
 }

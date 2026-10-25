@@ -38,9 +38,18 @@ public abstract class Entity implements EntityView {
         return positionCm;
     }
 
+    // For subclasses to move themselves
+    protected void setPositionCm(PointCm positionCm) {
+        this.positionCm = positionCm;
+    }
+
     @Override
     public boolean isSelected() {
         return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
     @Override
@@ -65,15 +74,6 @@ public abstract class Entity implements EntityView {
 
     public boolean isDeleted() {
         return deleted;
-    }
-
-    // For subclasses to move themselves
-    protected void setPositionCm(PointCm positionCm) {
-        this.positionCm = positionCm;
-    }
-
-    public void setSelected(boolean selected) {
-        this.selected = selected;
     }
 
     // Starts exploding, called by the entity itself or by a drone that hit it

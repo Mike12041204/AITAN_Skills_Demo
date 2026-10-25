@@ -17,9 +17,9 @@
 
     <!-- Smooth wave, Q curves to one side and T mirrors it to the other side -->
     <path
-        android:strokeColor="#616161"
+        android:pathData="M20,12.5 Q22.1,33.4 33.5,33.5 T45,45 T56.5,56.5 T70,71.5"
         android:strokeWidth="3"
+        android:strokeColor="#616161"
         android:strokeLineCap="round"
-        android:strokeLineJoin="round"
-        android:pathData="M20,12.5 Q22.1,33.4 33.5,33.5 T45,45 T56.5,56.5 T70,71.5" />
+        android:strokeLineJoin="round" />
 </vector>

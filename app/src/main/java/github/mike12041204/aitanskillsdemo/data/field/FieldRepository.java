@@ -29,15 +29,13 @@ public final class FieldRepository {
 
     private static final int NUMBER_OF_TARGETS = 6;
     private static final int NUMBER_OF_DRONES = 12;
-
-    // Goes up on every change so the UI knows to redraw
-    private long version;
-    private final BehaviorSubject<Long> versionStream;
-
     // Entities are changed in place, the data layer gets a read only list and the UI only gets read only views
     private final List<Entity> entities;
     private final List<Entity> readOnlyEntities;
     private final List<EntityView> entityViews;
+    // Goes up on every change so the UI knows to redraw
+    private long version;
+    private final BehaviorSubject<Long> versionStream;
 
     // Starts the field with random targets and drones inside the allowed start area
     public FieldRepository() {

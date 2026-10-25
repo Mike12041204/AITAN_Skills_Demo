@@ -18,25 +18,25 @@
 
     <!-- Solid straight line from the corner drone to the middle of the target -->
     <path
-        android:strokeColor="#616161"
+        android:pathData="M20,20 L70,70"
         android:strokeWidth="3"
+        android:strokeColor="#616161"
         android:strokeLineCap="round"
-        android:strokeLineJoin="round"
-        android:pathData="M20,20 L70,70" />
+        android:strokeLineJoin="round" />
 
     <!-- Smooth wave from the drone to the right, ends in the top right of the target -->
     <path
-        android:strokeColor="#616161"
+        android:pathData="M56,16 L58.9,18.9 Q53.8,29.3 61.75,33.25 T66.5,45.5 T71.25,57.75 T76,70"
         android:strokeWidth="3"
+        android:strokeColor="#616161"
         android:strokeLineCap="round"
-        android:strokeLineJoin="round"
-        android:pathData="M56,16 L58.9,18.9 Q53.8,29.3 61.75,33.25 T66.5,45.5 T71.25,57.75 T76,70" />
+        android:strokeLineJoin="round" />
 
     <!-- Smooth wave from the drone below, ends in the bottom left of the target -->
     <path
-        android:strokeColor="#616161"
+        android:pathData="M16,56 L18.9,58.9 Q29.3,53.8 33.25,61.75 T45.5,66.5 T57.75,71.25 T70,76"
         android:strokeWidth="3"
+        android:strokeColor="#616161"
         android:strokeLineCap="round"
-        android:strokeLineJoin="round"
-        android:pathData="M16,56 L18.9,58.9 Q29.3,53.8 33.25,61.75 T45.5,66.5 T57.75,71.25 T70,76" />
+        android:strokeLineJoin="round" />
 </vector>
