@@ -1,10 +1,5 @@
 package github.mike12041204.aitanskillsdemo.data.field;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Stream;
-
 import github.mike12041204.aitanskillsdemo.data.DataUtil;
 import github.mike12041204.aitanskillsdemo.data.entities.Drone;
 import github.mike12041204.aitanskillsdemo.data.entities.Entity;
@@ -12,14 +7,19 @@ import github.mike12041204.aitanskillsdemo.data.entities.Target;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 // Owns every entity on the field and all the rules for changing them
 public class FieldRepository {
 
     // All positions and sizes in real life centimeters
-    public static final float FIELD_WIDTH_CM = 15f; // Suggested min 15
-    public static final float FIELD_HEIGHT_CM = 23f; // Suggested min 15
+    // Width and height are suggested to be at least 15
+    public static final float FIELD_WIDTH_CM = 15f;
+    public static final float FIELD_HEIGHT_CM = 23f;
 
-    // For example, 6 means that entities won't generate in the outer 1/6 edges of the field
+    // For example, 10 means that entities won't generate in the outer 1/10 edges of the field
     private static final float EXCLUDED_BAND_DIVISOR = 10f;
     private static final float MIN_X_ENTITY_START_CM = FIELD_WIDTH_CM / EXCLUDED_BAND_DIVISOR;
     private static final float MAX_X_ENTITY_START_CM = FIELD_WIDTH_CM - MIN_X_ENTITY_START_CM;
@@ -39,13 +39,13 @@ public class FieldRepository {
 
     // Starts the field with random targets and drones inside the allowed start area
     public FieldRepository() {
-        Stream.generate(() -> new Target(randomStartPositionCm()))
-                .limit(NUMBER_OF_TARGETS)
-                .forEach(entities::add);
+        for (int i = 0; i < NUMBER_OF_TARGETS; i++) {
+            entities.add(new Target(randomStartPositionCm()));
+        }
 
-        Stream.generate(() -> new Drone(randomStartPositionCm()))
-                .limit(NUMBER_OF_DRONES)
-                .forEach(entities::add);
+        for (int i = 0; i < NUMBER_OF_DRONES; i++) {
+            entities.add(new Drone(randomStartPositionCm()));
+        }
 
         publish();
     }

@@ -196,7 +196,7 @@ private fun DrawScope.drawEntity(entity: Entity, pan: Offset, pxPerCm: Float, ic
     }
 }
 
-// Diamond icon, size is the width and height in cm
+// Diamond icon, the drone's size in cm is used for both the width and height
 private fun DrawScope.drawDrone(drone: Drone, pan: Offset, pxPerCm: Float, icons: EntityIcons) {
     val painter: Painter
 
@@ -217,7 +217,7 @@ private fun DrawScope.drawDrone(drone: Drone, pan: Offset, pxPerCm: Float, icons
     }
 }
 
-// Rectangle icon, size is the width in cm and the height keeps the image's shape
+// Rectangle icon, the target's size in cm is the width and the height keeps the image's shape
 private fun DrawScope.drawTarget(target: Target, pan: Offset, pxPerCm: Float, icons: EntityIcons) {
     val painter: Painter
 

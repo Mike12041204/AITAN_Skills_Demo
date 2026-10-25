@@ -1,8 +1,8 @@
 package github.mike12041204.aitanskillsdemo.data.entities;
 
-import java.util.List;
-
 import github.mike12041204.aitanskillsdemo.data.field.PointCm;
+
+import java.util.List;
 
 // What drones attack, only one target can be selected at a time
 public class Target extends Entity {

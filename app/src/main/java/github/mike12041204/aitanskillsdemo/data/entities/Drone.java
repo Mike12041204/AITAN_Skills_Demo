@@ -1,11 +1,11 @@
 package github.mike12041204.aitanskillsdemo.data.entities;
 
-import java.util.List;
-
 import github.mike12041204.aitanskillsdemo.data.DataUtil;
 import github.mike12041204.aitanskillsdemo.data.field.PointCm;
 import github.mike12041204.aitanskillsdemo.data.path.DronePath;
 import github.mike12041204.aitanskillsdemo.data.path.StraightPath;
+
+import java.util.List;
 
 // Moves around the field following commands, many drones can be selected at once
 public class Drone extends Entity {
@@ -76,7 +76,7 @@ public class Drone extends Entity {
         if (commandTarget != null && commandTarget.getExploding()) {
             float distanceToTargetCm = DataUtil.distanceCm(getPositionCm(), commandTarget.getPositionCm());
 
-            // If the drones already close keep going and explode with it
+            // If the drone is already close keep going and explode with it
             if (distanceToTargetCm > EXPLODE_CANCEL_DISTANCE_CM) {
                 command = DroneCommand.NONE;
                 commandTarget = null;

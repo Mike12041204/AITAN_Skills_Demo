@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModel
 import github.mike12041204.aitanskillsdemo.AppContainer
 import github.mike12041204.aitanskillsdemo.R
 
-
 // What one hotbar button does, onClick runs when tapped if condition is true, otherwise failMessage is shown
 data class HotbarAction(
     @DrawableRes val icon: Int,
@@ -67,7 +66,7 @@ class HotbarViewModel : ViewModel() {
             failMessage = "Select one or more drones",
             condition = { droneCommands.canCancel() },
             onClick = { droneCommands.cancel() }
-        ),
+        )
     )
 
     // Runs the action if its condition is met, otherwise shows its fail message

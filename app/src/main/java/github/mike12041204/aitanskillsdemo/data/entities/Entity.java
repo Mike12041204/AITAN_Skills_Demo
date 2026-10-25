@@ -1,8 +1,8 @@
 package github.mike12041204.aitanskillsdemo.data.entities;
 
-import java.util.List;
-
 import github.mike12041204.aitanskillsdemo.data.field.PointCm;
+
+import java.util.List;
 
 // Anything that sits on the field, subclasses decide the size, speed and explode time, how it looks is up to the UI
 public abstract class Entity {

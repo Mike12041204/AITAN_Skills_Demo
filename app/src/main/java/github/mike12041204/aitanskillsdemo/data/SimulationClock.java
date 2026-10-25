@@ -1,12 +1,12 @@
 package github.mike12041204.aitanskillsdemo.data;
 
 import github.mike12041204.aitanskillsdemo.data.field.FieldRepository;
-import java.util.concurrent.TimeUnit;
-
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
+
+import java.util.concurrent.TimeUnit;
 
 // Ticks a set number of times per second and updates the field on every tick
 public class SimulationClock {

@@ -1,8 +1,8 @@
 package github.mike12041204.aitanskillsdemo.data;
 
-import java.util.Random;
-
 import github.mike12041204.aitanskillsdemo.data.field.PointCm;
+
+import java.util.Random;
 
 // Small helper functions for the data layer, never created as an object
 public final class DataUtil {
