@@ -1,5 +1,6 @@
 package github.mike12041204.aitanskillsdemo.data.field;
 
+import android.util.Log;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -9,6 +10,8 @@ import java.util.concurrent.TimeUnit;
 
 // Ticks a set number of times per second and updates the field on every tick
 public final class SimulationClock {
+
+    private static final String LOG_TAG = "SimulationClock";
 
     private static final long MICROSECONDS_PER_SECOND = 1_000_000L;
 
@@ -45,7 +48,7 @@ public final class SimulationClock {
 
         // Ticks on the main thread so entities are never changed while the UI is drawing them
         ticks = Observable.interval(FRAME_DURATION_US, TimeUnit.MICROSECONDS, AndroidSchedulers.mainThread())
-                .subscribe(ignoredFrame -> onFrame());
+                .subscribe(ignoredFrame -> onFrame(), this::onError);
     }
 
     // Runs once per frame
@@ -54,6 +57,12 @@ public final class SimulationClock {
 
         frameCount++;
         frameCountStream.onNext(frameCount);
+    }
+
+    // Logs what went wrong in a frame, then crashes so the bug is never hidden
+    private void onError(Throwable error) {
+        Log.e(LOG_TAG, "Simulation frame failed", error);
+        throw new IllegalStateException("Simulation frame failed", error);
     }
 
     // Stops ticking, the simulation pauses until start is called again

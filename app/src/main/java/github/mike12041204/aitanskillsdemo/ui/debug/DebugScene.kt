@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.Color
 import github.mike12041204.aitanskillsdemo.AppContainer
 import github.mike12041204.aitanskillsdemo.ui.cmToDp
 
-private const val DEBUG_TEXT_COLOR = 0xFF00C853L // Green
+private val DEBUG_TEXT_COLOR = Color(0xFF00C853) // Green
 private const val DEBUG_PADDING_CM = 0.15f
 
 // Information for testing, only shown when debug mode is on
@@ -21,7 +21,7 @@ fun DebugScene(modifier: Modifier = Modifier) {
 
     Text(
         frameCount.toString(),
-        color = Color(DEBUG_TEXT_COLOR),
+        color = DEBUG_TEXT_COLOR,
         modifier = modifier
             .statusBarsPadding()
             .padding(cmToDp(DEBUG_PADDING_CM))
