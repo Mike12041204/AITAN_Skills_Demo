@@ -47,6 +47,5 @@ dependencies {
     implementation(libs.androidx.compose.runtime.rxjava3)
     implementation(libs.rxjava)
     implementation(libs.rxandroid)
-    testImplementation(libs.junit)
     debugImplementation(libs.androidx.compose.ui.tooling)
 }
