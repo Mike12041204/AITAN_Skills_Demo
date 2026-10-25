@@ -7,11 +7,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rxjava3.subscribeAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
 import github.mike12041204.aitanskillsdemo.ui.cmToDp
+import github.mike12041204.aitanskillsdemo.ui.theme.DEBUG_TEXT_COLOR
 
-private val DEBUG_TEXT_COLOR = Color(0xFF00C853) // Green
 private const val DEBUG_PADDING_CM = 0.15f
 
 // Information for testing, only shown when debug mode is on

@@ -10,7 +10,6 @@ import androidx.compose.runtime.rxjava3.subscribeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.StrokeCap
@@ -31,17 +30,49 @@ import github.mike12041204.aitanskillsdemo.data.field.FieldRepository
 import github.mike12041204.aitanskillsdemo.ui.fieldCmToPx
 import github.mike12041204.aitanskillsdemo.ui.fieldPxToCm
 import github.mike12041204.aitanskillsdemo.ui.screenPxPerCm
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_BORDER_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_BORDER_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_BORDER_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_BORDER_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_BORDER_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_BORDER_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_BORDER_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_BORDER_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_BORDER_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_DISCOVER_RANGE_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_DISCOVER_RANGE_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_DISCOVER_RANGE_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_DISCOVER_RANGE_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_DISCOVER_RANGE_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_DISCOVER_RANGE_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_DISCOVER_RANGE_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_DISCOVER_RANGE_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_DISCOVER_RANGE_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_GRID_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_GRID_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_GRID_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_GRID_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_GRID_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_GRID_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_GRID_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_GRID_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_GRID_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_PATH_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_PATH_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_PATH_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_PATH_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_PATH_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_PATH_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_PATH_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_PATH_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.FIELD_PATH_COLOR
 import github.mike12041204.aitanskillsdemo.ui.toOffset
 
 private const val BORDER_STROKE_WIDTH_CM = 0.09f
-private val BORDER_COLOR = Color(0xFF616161) // Dark gray
-private val GRID_COLOR = Color(0xFFCAC4D0) // Light gray
 
 private const val PATH_STROKE_WIDTH_CM = 0.03f
-private val PATH_COLOR = Color(0xFF757575) // Gray
 private const val PATH_DOT_LENGTH_CM = 0.01f
 private const val PATH_DOT_GAP_CM = 0.1f
-private val DISCOVER_RANGE_COLOR = Color(0xFFBDBDBD) // Light gray
 
 // How many times per second an exploding entity blinks off and back on
 private const val EXPLODE_BLINKS_PER_SECOND = 6f
@@ -105,7 +136,7 @@ fun FieldScene(modifier: Modifier = Modifier, viewModel: FieldViewModel = viewMo
 // Outline around the whole field
 private fun DrawScope.drawBorder(pan: Offset, fieldSize: Size, pxPerCm: Float) {
     drawRect(
-        BORDER_COLOR,
+        FIELD_BORDER_COLOR,
         topLeft = pan,
         size = fieldSize,
         style = Stroke(BORDER_STROKE_WIDTH_CM * pxPerCm)
@@ -116,11 +147,11 @@ private fun DrawScope.drawBorder(pan: Offset, fieldSize: Size, pxPerCm: Float) {
 private fun DrawScope.drawGrid(pan: Offset, fieldSize: Size, pxPerCm: Float) {
     for (i in 1..<FieldRepository.FIELD_WIDTH_CM.toInt()) {
         val x = pan.x + i * pxPerCm
-        drawLine(GRID_COLOR, Offset(x, pan.y), Offset(x, pan.y + fieldSize.height))
+        drawLine(FIELD_GRID_COLOR, Offset(x, pan.y), Offset(x, pan.y + fieldSize.height))
     }
     for (i in 1..<FieldRepository.FIELD_HEIGHT_CM.toInt()) {
         val y = pan.y + i * pxPerCm
-        drawLine(GRID_COLOR, Offset(pan.x, y), Offset(pan.x + fieldSize.width, y))
+        drawLine(FIELD_GRID_COLOR, Offset(pan.x, y), Offset(pan.x + fieldSize.width, y))
     }
 }
 
@@ -136,7 +167,7 @@ private fun DrawScope.drawDroneCommand(drone: DroneView, pan: Offset, pxPerCm: F
 // Light grey ring showing how close a target has to be for a patrolling drone to attack it
 private fun DrawScope.drawDiscoverRange(drone: DroneView, pan: Offset, pxPerCm: Float) {
     drawCircle(
-        DISCOVER_RANGE_COLOR,
+        FIELD_DISCOVER_RANGE_COLOR,
         radius = DroneView.PATROL_DISCOVER_DISTANCE_CM * pxPerCm,
         center = fieldCmToPx(drone.positionCm.toOffset(), pan, pxPerCm),
         style = Stroke(PATH_STROKE_WIDTH_CM * pxPerCm)
@@ -164,7 +195,7 @@ private fun DrawScope.drawRemainingPath(drone: DroneView, pan: Offset, pxPerCm: 
 
     drawPath(
         line,
-        PATH_COLOR,
+        FIELD_PATH_COLOR,
         style = Stroke(
             width = PATH_STROKE_WIDTH_CM * pxPerCm,
             cap = StrokeCap.Round,

@@ -28,6 +28,16 @@ import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.lifecycle.viewmodel.compose.viewModel
 import github.mike12041204.aitanskillsdemo.ui.cmToDp
+import github.mike12041204.aitanskillsdemo.ui.theme.HOTBAR_BUTTON_BORDER_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.HOTBAR_BUTTON_BORDER_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.HOTBAR_BUTTON_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.HOTBAR_BUTTON_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.HOTBAR_BUTTON_FAIL_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.HOTBAR_BUTTON_FAIL_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.HOTBAR_BUTTON_FLASH_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.HOTBAR_BUTTON_FLASH_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.HOTBAR_MESSAGE_COLOR
+import github.mike12041204.aitanskillsdemo.ui.theme.HOTBAR_MESSAGE_COLOR
 import kotlinx.coroutines.launch
 
 // All sizes in real life centimeters
@@ -36,13 +46,8 @@ private const val BUTTON_SPACING_CM = 0.15f
 private const val ICON_PADDING_CM = 0.15f
 
 private const val BUTTON_BORDER_WIDTH_CM = 0.03f
-private val BUTTON_BORDER_COLOR = Color(0xFF616161) // Dark gray
-private val BUTTON_COLOR = Color(0xFFE0E0E0) // Light gray
-private val BUTTON_FLASH_COLOR = Color(0xFF64B5F6) // Blue
-private val BUTTON_FAIL_COLOR = Color(0xFFE57373) // Red
 private const val FLASH_DURATION_MS = 300
 
-private val MESSAGE_COLOR = Color(0xFFD32F2F) // Red
 private const val MESSAGE_SHOW_MS = 1000
 private const val MESSAGE_FADE_MS = 500
 
@@ -78,9 +83,9 @@ private fun HotbarMessage(message: String, messageCount: Int) {
 
     LaunchedEffect(messageCount) {
         if (messageCount > 0) {
-            color.snapTo(MESSAGE_COLOR)
+            color.snapTo(HOTBAR_MESSAGE_COLOR)
             color.animateTo(
-                MESSAGE_COLOR.copy(alpha = 0f),
+                HOTBAR_MESSAGE_COLOR.copy(alpha = 0f),
                 tween(MESSAGE_FADE_MS, delayMillis = MESSAGE_SHOW_MS)
             )
         }
@@ -99,14 +104,14 @@ private fun HotbarMessage(message: String, messageCount: Int) {
 @Composable
 private fun HotbarButton(action: HotbarAction, onTapped: () -> Boolean) {
     // Each button gets its own background color so only the tapped one flashes
-    val background = remember { Animatable(BUTTON_COLOR) }
+    val background = remember { Animatable(HOTBAR_BUTTON_COLOR) }
     val scope = rememberCoroutineScope()
 
     Box(
         modifier = Modifier
             .size(cmToDp(BUTTON_SIZE_CM))
             .background(background.value)
-            .border(cmToDp(BUTTON_BORDER_WIDTH_CM), BUTTON_BORDER_COLOR)
+            .border(cmToDp(BUTTON_BORDER_WIDTH_CM), HOTBAR_BUTTON_BORDER_COLOR)
             .clickable {
                 // Runs the action if its condition is met, otherwise shows its fail message
                 val actionRan = onTapped()
@@ -114,15 +119,15 @@ private fun HotbarButton(action: HotbarAction, onTapped: () -> Boolean) {
                 val flashColor: Color
 
                 if (actionRan) {
-                    flashColor = BUTTON_FLASH_COLOR
+                    flashColor = HOTBAR_BUTTON_FLASH_COLOR
                 } else {
-                    flashColor = BUTTON_FAIL_COLOR
+                    flashColor = HOTBAR_BUTTON_FAIL_COLOR
                 }
 
                 // Flash, then fade back to the normal color
                 scope.launch {
                     background.snapTo(flashColor)
-                    background.animateTo(BUTTON_COLOR, tween(FLASH_DURATION_MS))
+                    background.animateTo(HOTBAR_BUTTON_COLOR, tween(FLASH_DURATION_MS))
                 }
             }
             .padding(cmToDp(ICON_PADDING_CM))
