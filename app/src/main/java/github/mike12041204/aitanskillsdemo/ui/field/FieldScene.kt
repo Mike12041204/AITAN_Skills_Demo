@@ -1,4 +1,4 @@
-package github.mike12041204.aitanskillsdemo.ui
+package github.mike12041204.aitanskillsdemo.ui.field
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectDragGestures
@@ -23,10 +23,14 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import github.mike12041204.aitanskillsdemo.R
-import github.mike12041204.aitanskillsdemo.data.Drone
-import github.mike12041204.aitanskillsdemo.data.Entity
-import github.mike12041204.aitanskillsdemo.data.FieldRepository
-import github.mike12041204.aitanskillsdemo.data.Target
+import github.mike12041204.aitanskillsdemo.data.entities.Drone
+import github.mike12041204.aitanskillsdemo.data.entities.Entity
+import github.mike12041204.aitanskillsdemo.data.entities.Target
+import github.mike12041204.aitanskillsdemo.data.field.FieldRepository
+import github.mike12041204.aitanskillsdemo.ui.fieldCmToPx
+import github.mike12041204.aitanskillsdemo.ui.fieldPxToCm
+import github.mike12041204.aitanskillsdemo.ui.screenPxPerCm
+import github.mike12041204.aitanskillsdemo.ui.toOffset
 
 private const val BORDER_STROKE_WIDTH_CM = 0.09f
 private const val BORDER_COLOR = 0xFF616161L // Dark gray

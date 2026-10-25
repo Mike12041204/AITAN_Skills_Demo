@@ -1,5 +1,6 @@
 package github.mike12041204.aitanskillsdemo.data;
 
+import github.mike12041204.aitanskillsdemo.data.field.FieldRepository;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;

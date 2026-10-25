@@ -1,6 +1,8 @@
-package github.mike12041204.aitanskillsdemo.data;
+package github.mike12041204.aitanskillsdemo.data.entities;
 
 import java.util.List;
+
+import github.mike12041204.aitanskillsdemo.data.field.PointCm;
 
 // Anything that sits on the field, subclasses decide the size, speed and explode time, how it looks is up to the UI
 public abstract class Entity {
@@ -60,24 +62,24 @@ public abstract class Entity {
         return explodingSeconds;
     }
 
-    /* package */ void setSelected(boolean selected) {
+    public void setSelected(boolean selected) {
         this.selected = selected;
     }
 
-    /* package */ boolean getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
     // Starts exploding, called by the entity itself or by a drone that hit it
     // Unselected so an exploding entity can never be given a command
-    /* package */ void explode() {
+    public void explode() {
         this.exploding = true;
         this.selected = false;
     }
 
     // Called once per frame, exploding entities count down until they are deleted, the rest follow their command
     // entities is every entity on the field, read only, so entities can react to each other
-    /* package */ final void update(float secondsSinceLastFrame, List<Entity> entities) {
+    public final void update(float secondsSinceLastFrame, List<Entity> entities) {
         if (exploding) {
             explodingSeconds += secondsSinceLastFrame;
 
@@ -91,5 +93,5 @@ public abstract class Entity {
     }
 
     // Called once per frame while not exploding, each kind of entity decides what its command does
-    /* package */ abstract void updateCommand(float secondsSinceLastFrame, List<Entity> entities);
+    public abstract void updateCommand(float secondsSinceLastFrame, List<Entity> entities);
 }

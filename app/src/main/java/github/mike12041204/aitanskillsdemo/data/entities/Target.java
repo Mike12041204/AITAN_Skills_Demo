@@ -1,6 +1,8 @@
-package github.mike12041204.aitanskillsdemo.data;
+package github.mike12041204.aitanskillsdemo.data.entities;
 
 import java.util.List;
+
+import github.mike12041204.aitanskillsdemo.data.field.PointCm;
 
 // What drones attack, only one target can be selected at a time
 public class Target extends Entity {
@@ -30,12 +32,12 @@ public class Target extends Entity {
         return command;
     }
 
-    /* package */ void setCommand(TargetCommand command) {
+    public void setCommand(TargetCommand command) {
         this.command = command;
     }
 
     // Runs the actions for the target's command, targets do not move
     @Override
-    /* package */ void updateCommand(float secondsSinceLastFrame, List<Entity> entities) {
+    public void updateCommand(float secondsSinceLastFrame, List<Entity> entities) {
     }
 }

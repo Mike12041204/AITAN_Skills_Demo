@@ -1,10 +1,14 @@
-package github.mike12041204.aitanskillsdemo.data;
+package github.mike12041204.aitanskillsdemo.data.field;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
+import github.mike12041204.aitanskillsdemo.data.DataUtil;
+import github.mike12041204.aitanskillsdemo.data.entities.Drone;
+import github.mike12041204.aitanskillsdemo.data.entities.Entity;
+import github.mike12041204.aitanskillsdemo.data.entities.Target;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
@@ -78,7 +82,7 @@ public class FieldRepository {
     }
 
     // Called by SimulationClock once per frame, updates every entity then redraws the field once
-    /* package */ void update(float secondsSinceLastFrame) {
+    public void update(float secondsSinceLastFrame) {
         for (Entity entity : entities) {
             entity.update(secondsSinceLastFrame, readOnlyEntities);
         }
@@ -90,8 +94,8 @@ public class FieldRepository {
     }
 
     // Tells the UI the field changed, call this at the end of anything that changes entities
-    // DroneCommands in the same package calls this too
-    /* package */ void publish() {
+    // DroneCommands calls this too
+    public void publish() {
         versionStream.onNext(++version);
     }
 }

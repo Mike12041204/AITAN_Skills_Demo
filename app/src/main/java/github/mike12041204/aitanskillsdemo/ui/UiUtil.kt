@@ -5,8 +5,8 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.unit.Dp
-import github.mike12041204.aitanskillsdemo.data.FieldRepository
-import github.mike12041204.aitanskillsdemo.data.PointCm
+import github.mike12041204.aitanskillsdemo.data.field.FieldRepository
+import github.mike12041204.aitanskillsdemo.data.field.PointCm
 
 private const val CM_PER_INCH = 2.54f
 

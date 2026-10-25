@@ -1,4 +1,4 @@
-package github.mike12041204.aitanskillsdemo.ui
+package github.mike12041204.aitanskillsdemo.ui.debug
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -9,6 +9,7 @@ import androidx.compose.runtime.rxjava3.subscribeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import github.mike12041204.aitanskillsdemo.AppContainer
+import github.mike12041204.aitanskillsdemo.ui.cmToDp
 
 private const val DEBUG_TEXT_COLOR = 0xFF00C853L // Green
 private const val DEBUG_PADDING_CM = 0.15f

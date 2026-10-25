@@ -1,8 +1,12 @@
-package github.mike12041204.aitanskillsdemo.data;
+package github.mike12041204.aitanskillsdemo.data.path;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import github.mike12041204.aitanskillsdemo.data.DataUtil;
+import github.mike12041204.aitanskillsdemo.data.field.FieldRepository;
+import github.mike12041204.aitanskillsdemo.data.field.PointCm;
 
 // Route a drone follows, built once when a command is given
 // The drone moves along it each frame and the UI draws the same route
@@ -38,12 +42,12 @@ public abstract class DronePath {
     }
 
     // True once the drone has reached the last point, looping paths never finish
-    /* package */ boolean isFinished() {
+    public boolean isFinished() {
         return !loops && nextPointIndex >= points.size();
     }
 
     // Moves from position along the path by distanceCm, returns where it ends up
-    /* package */ PointCm advance(PointCm position, float distanceCm) {
+    public PointCm advance(PointCm position, float distanceCm) {
         float remainingCm = distanceCm;
 
         if (loops) {

@@ -8,9 +8,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import github.mike12041204.aitanskillsdemo.ui.DebugScene
-import github.mike12041204.aitanskillsdemo.ui.FieldScene
-import github.mike12041204.aitanskillsdemo.ui.HotbarScene
+import github.mike12041204.aitanskillsdemo.ui.debug.DebugScene
+import github.mike12041204.aitanskillsdemo.ui.field.FieldScene
+import github.mike12041204.aitanskillsdemo.ui.hotbar.HotbarScene
 import github.mike12041204.aitanskillsdemo.ui.theme.AITANSkillsDemoTheme
 
 // Shows extra information on screen for testing, turn off before release

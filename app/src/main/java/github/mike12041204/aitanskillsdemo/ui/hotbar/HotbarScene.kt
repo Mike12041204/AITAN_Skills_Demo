@@ -1,4 +1,4 @@
-package github.mike12041204.aitanskillsdemo.ui
+package github.mike12041204.aitanskillsdemo.ui.hotbar
 
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.tween
@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.lifecycle.viewmodel.compose.viewModel
+import github.mike12041204.aitanskillsdemo.ui.cmToDp
 import kotlinx.coroutines.launch
 
 // All sizes in real life centimeters

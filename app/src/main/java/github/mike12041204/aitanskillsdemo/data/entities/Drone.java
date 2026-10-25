@@ -1,6 +1,11 @@
-package github.mike12041204.aitanskillsdemo.data;
+package github.mike12041204.aitanskillsdemo.data.entities;
 
 import java.util.List;
+
+import github.mike12041204.aitanskillsdemo.data.DataUtil;
+import github.mike12041204.aitanskillsdemo.data.field.PointCm;
+import github.mike12041204.aitanskillsdemo.data.path.DronePath;
+import github.mike12041204.aitanskillsdemo.data.path.StraightPath;
 
 // Moves around the field following commands, many drones can be selected at once
 public class Drone extends Entity {
@@ -44,7 +49,7 @@ public class Drone extends Entity {
         return command;
     }
 
-    /* package */ void setCommand(DroneCommand command) {
+    public void setCommand(DroneCommand command) {
         this.command = command;
     }
 
@@ -52,7 +57,7 @@ public class Drone extends Entity {
         return commandTarget;
     }
 
-    /* package */ void setCommandTarget(Target commandTarget) {
+    public void setCommandTarget(Target commandTarget) {
         this.commandTarget = commandTarget;
     }
 
@@ -60,13 +65,13 @@ public class Drone extends Entity {
         return path;
     }
 
-    /* package */ void setPath(DronePath path) {
+    public void setPath(DronePath path) {
         this.path = path;
     }
 
     // Moves the drone along its command path, then runs the actions for its command
     @Override
-    /* package */ void updateCommand(float secondsSinceLastFrame, List<Entity> entities) {
+    public void updateCommand(float secondsSinceLastFrame, List<Entity> entities) {
         // Another drone already destroyed this target, so stop instead of flying to where it was
         if (commandTarget != null && commandTarget.getExploding()) {
             float distanceToTargetCm = DataUtil.distanceCm(getPositionCm(), commandTarget.getPositionCm());

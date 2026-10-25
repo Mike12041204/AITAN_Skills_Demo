@@ -1,13 +1,16 @@
-package github.mike12041204.aitanskillsdemo.data;
+package github.mike12041204.aitanskillsdemo.data.path;
+
+import github.mike12041204.aitanskillsdemo.data.entities.Drone;
+import github.mike12041204.aitanskillsdemo.data.field.PointCm;
 
 // Loops around a circle that the drone is already on when the patrol starts
-/* package */ class PatrolPath extends DronePath {
+public class PatrolPath extends DronePath {
 
     private static final float PATROL_RADIUS_CM = 1.5f;
     // More points make a smoother circle
     private static final int PATROL_POINT_COUNT = 50;
 
-    /* package */ PatrolPath(Drone drone) {
+    public PatrolPath(Drone drone) {
         super(true);
 
         PointCm start = drone.getPositionCm();

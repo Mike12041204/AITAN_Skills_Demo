@@ -1,5 +1,12 @@
-package github.mike12041204.aitanskillsdemo.data;
+package github.mike12041204.aitanskillsdemo.data.commands;
 
+import github.mike12041204.aitanskillsdemo.data.entities.Drone;
+import github.mike12041204.aitanskillsdemo.data.entities.Entity;
+import github.mike12041204.aitanskillsdemo.data.entities.Target;
+import github.mike12041204.aitanskillsdemo.data.field.FieldRepository;
+import github.mike12041204.aitanskillsdemo.data.path.EvasivePath;
+import github.mike12041204.aitanskillsdemo.data.path.PatrolPath;
+import github.mike12041204.aitanskillsdemo.data.path.StraightPath;
 import java.util.ArrayList;
 import java.util.List;
 

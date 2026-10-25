@@ -1,4 +1,4 @@
-package github.mike12041204.aitanskillsdemo.data;
+package github.mike12041204.aitanskillsdemo.data.field;
 
 // One position on the field in cm, never changes once made
 public final class PointCm {
