@@ -14,7 +14,7 @@ public class Drone extends Entity {
     }
 
     // Real-life size of a drone in cm
-    private static final float SIZE_CM = 0.25f;
+    private static final float SIZE_CM = 0.5f;
     // How far a drone moves along its path every second
     private static final float SPEED_CM_PER_SECOND = 2f;
     // How close an attacking drone has to get to its target for both of them to explode
@@ -24,7 +24,7 @@ public class Drone extends Entity {
     // How long a drone explodes for before it deletes itself
     private static final float EXPLODE_DURATION_SECONDS = 1f;
     // A patrolling drone straight attacks the closest target that comes within this distance
-    public static final float PATROL_DISCOVER_DISTANCE_CM = 4f;
+    public static final float PATROL_DISCOVER_DISTANCE_CM = 2.75f;
 
     private DroneCommand command;
     // Target the command is aimed at, stays the same even if a different target gets selected later

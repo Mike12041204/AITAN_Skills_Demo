@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Evasive attack button, drone in the top left with a wavy line to a target in the bottom right -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="100dp"
+    android:height="100dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <!-- Drone diamond -->
+    <path
+        android:fillColor="#616161"
+        android:pathData="M16,4 L28,16 L16,28 L4,16 Z" />
+
+    <!-- Target rectangle -->
+    <path
+        android:fillColor="#616161"
+        android:pathData="M68,68 L92,68 L92,92 L68,92 Z" />
+
+    <!-- Smooth wave, Q curves to one side and T mirrors it to the other side -->
+    <path
+        android:strokeColor="#616161"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M20,12.5 Q22.1,33.4 33.5,33.5 T45,45 T56.5,56.5 T70,71.5" />
+</vector>

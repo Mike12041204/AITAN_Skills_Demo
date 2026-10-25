@@ -12,18 +12,18 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject;
 public class FieldRepository {
 
     // All positions and sizes in real life centimeters
-    public static final float FIELD_WIDTH_CM = 10f;
-    public static final float FIELD_HEIGHT_CM = 18f;
+    public static final float FIELD_WIDTH_CM = 15f; // Suggested min 15
+    public static final float FIELD_HEIGHT_CM = 23f; // Suggested min 15
 
     // For example, 6 means that entities won't generate in the outer 1/6 edges of the field
-    private static final float EXCLUDED_BAND_DIVISOR = 6f;
+    private static final float EXCLUDED_BAND_DIVISOR = 10f;
     private static final float MIN_X_ENTITY_START_CM = FIELD_WIDTH_CM / EXCLUDED_BAND_DIVISOR;
     private static final float MAX_X_ENTITY_START_CM = FIELD_WIDTH_CM - MIN_X_ENTITY_START_CM;
     private static final float MIN_Y_ENTITY_START_CM = FIELD_HEIGHT_CM / EXCLUDED_BAND_DIVISOR;
     private static final float MAX_Y_ENTITY_START_CM = FIELD_HEIGHT_CM - MIN_Y_ENTITY_START_CM;
 
-    private static final int NUMBER_OF_TARGETS = 2;
-    private static final int NUMBER_OF_DRONES = 5;
+    private static final int NUMBER_OF_TARGETS = 6;
+    private static final int NUMBER_OF_DRONES = 12;
 
     // Goes up on every change so the UI knows to redraw
     private long version = 0L;

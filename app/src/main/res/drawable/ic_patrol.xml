@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Patrol button, an eye inside a diamond -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="100dp"
+    android:height="100dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <!-- Diamond around the eye -->
+    <path
+        android:strokeColor="#616161"
+        android:strokeWidth="6"
+        android:strokeLineJoin="round"
+        android:pathData="M50,7 L93,50 L50,93 L7,50 Z" />
+
+    <!-- Almond shaped outline of the eye -->
+    <path
+        android:strokeColor="#616161"
+        android:strokeWidth="6"
+        android:strokeLineJoin="round"
+        android:pathData="M22,50 Q50,22 78,50 Q50,78 22,50 Z" />
+
+    <!-- Pupil -->
+    <path
+        android:fillColor="#616161"
+        android:pathData="M41,50 a9,9 0 1,0 18,0 a9,9 0 1,0 -18,0 Z" />
+</vector>

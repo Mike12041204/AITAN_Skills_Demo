@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import github.mike12041204.aitanskillsdemo.AppContainer
+import github.mike12041204.aitanskillsdemo.R
 
 // What one hotbar button does, onClick runs when tapped if condition is true, otherwise failMessage is shown
 data class HotbarAction(
@@ -32,35 +33,35 @@ class HotbarViewModel : ViewModel() {
     // Add an entry here to add a button to the hotbar
     val actions = listOf(
         HotbarAction(
-            icon = android.R.drawable.ic_menu_add,
+            icon = R.drawable.ic_straight_attack,
             description = "Straight attack",
             failMessage = "Select one or more drones and one target",
             condition = { droneCommands.canStraightAttack() },
             onClick = { droneCommands.straightAttack() }
         ),
         HotbarAction(
-            icon = android.R.drawable.ic_menu_delete,
+            icon = R.drawable.ic_evasive_attack,
             description = "Evasive attack",
             failMessage = "Select one or more drones and one target",
             condition = { droneCommands.canEvasiveAttack() },
             onClick = { droneCommands.evasiveAttack() }
         ),
         HotbarAction(
-            icon = android.R.drawable.ic_menu_info_details,
+            icon = R.drawable.ic_coordinated_attack,
             description = "Coordinated attack",
             failMessage = "Select one or more drones and one target",
             condition = { droneCommands.canCoordinatedAttack() },
             onClick = { droneCommands.coordinatedAttack() }
         ),
         HotbarAction(
-            icon = android.R.drawable.ic_media_play,
+            icon = R.drawable.ic_patrol,
             description = "Patrol",
             failMessage = "Select one or more drones",
             condition = { droneCommands.canPatrol() },
             onClick = { droneCommands.patrol() }
         ),
         HotbarAction(
-            icon = android.R.drawable.ic_menu_close_clear_cancel,
+            icon = R.drawable.ic_cancel,
             description = "Cancel",
             failMessage = "Select one or more drones",
             condition = { droneCommands.canCancel() },

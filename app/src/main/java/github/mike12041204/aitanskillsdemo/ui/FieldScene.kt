@@ -17,30 +17,37 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.translate
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.painterResource
 import androidx.lifecycle.viewmodel.compose.viewModel
+import github.mike12041204.aitanskillsdemo.R
 import github.mike12041204.aitanskillsdemo.data.Drone
 import github.mike12041204.aitanskillsdemo.data.Entity
 import github.mike12041204.aitanskillsdemo.data.FieldRepository
 import github.mike12041204.aitanskillsdemo.data.Target
 
-private const val BORDER_STROKE_WIDTH_CM = 0.02f
-private const val BORDER_COLOR = 0xFF79747EL // Gray
+private const val BORDER_STROKE_WIDTH_CM = 0.09f
+private const val BORDER_COLOR = 0xFF616161L // Dark gray
 private const val GRID_COLOR = 0xFFCAC4D0L   // Light gray
 
 private const val PATH_STROKE_WIDTH_CM = 0.03f
 private const val PATH_COLOR = 0xFF757575L   // Gray
-private const val PATH_DASH_LENGTH_CM = 0.15f
-private const val PATH_DASH_GAP_CM = 0.1f
+private const val PATH_DOT_LENGTH_CM = 0.01f
+private const val PATH_DOT_GAP_CM = 0.1f
 private const val DISCOVER_RANGE_COLOR = 0xFFBDBDBDL // Light gray
-
-private const val DRONE_COLOR = 0xFF90CAF9L            // Light blue
-private const val DRONE_SELECTED_COLOR = 0xFF1E88E5L   // Blue
-private const val TARGET_COLOR = 0xFFFFCC80L           // Light orange
-private const val TARGET_SELECTED_COLOR = 0xFFFB8C00L  // Orange
 
 // How many times per second an exploding entity blinks off and back on
 private const val EXPLODE_BLINKS_PER_SECOND = 6f
+
+// Images for every kind of entity, loaded once in FieldScene and passed down to the drawing code
+private class EntityIcons(
+    val droneUnselected: Painter,
+    val droneSelected: Painter,
+    val targetUnselected: Painter,
+    val targetSelected: Painter
+)
 
 // Draws the field at real life size and lets the user tap entities and drag around
 @Composable
@@ -53,6 +60,14 @@ fun FieldScene(modifier: Modifier = Modifier, viewModel: FieldViewModel = viewMo
         FieldRepository.FIELD_HEIGHT_CM * pxPerCm
     )
     val pan = viewModel.panCm * pxPerCm
+
+    // Entity images, loaded here because images can only be loaded outside the drawing code
+    val icons = EntityIcons(
+        droneUnselected = painterResource(R.drawable.drone_unselected),
+        droneSelected = painterResource(R.drawable.drone_selected),
+        targetUnselected = painterResource(R.drawable.target_unselected),
+        targetSelected = painterResource(R.drawable.target_selected)
+    )
 
     Canvas(
         modifier = modifier
@@ -82,7 +97,7 @@ fun FieldScene(modifier: Modifier = Modifier, viewModel: FieldViewModel = viewMo
 
         // Commands first so entities are drawn on top of them
         viewModel.entities.filterIsInstance<Drone>().forEach { drawDroneCommand(it, pan, pxPerCm) }
-        viewModel.entities.forEach { drawEntity(it, pan, pxPerCm) }
+        viewModel.entities.forEach { drawEntity(it, pan, pxPerCm, icons) }
     }
 }
 
@@ -108,33 +123,13 @@ private fun DrawScope.drawGrid(pan: Offset, fieldSize: Size, pxPerCm: Float) {
     }
 }
 
-// Shows the part of the drone's path it has not reached yet, the line style depends on the command
+// Shows the part of the drone's path it has not reached yet, patrolling drones also show their discover range
 private fun DrawScope.drawDroneCommand(drone: Drone, pan: Offset, pxPerCm: Float) {
-    when (drone.command) {
-        // Solid line
-        Drone.DroneCommand.STRAIGHT_ATTACK, Drone.DroneCommand.EVASIVE_ATTACK -> drawRemainingPath(
-            drone,
-            pan,
-            pxPerCm,
-            null
-        )
-
-        // Dashed loop with the discover range around the drone
-        Drone.DroneCommand.PATROL -> {
-            drawDiscoverRange(drone, pan, pxPerCm)
-            drawRemainingPath(
-                drone,
-                pan,
-                pxPerCm,
-                PathEffect.dashPathEffect(
-                    floatArrayOf(PATH_DASH_LENGTH_CM * pxPerCm, PATH_DASH_GAP_CM * pxPerCm)
-                )
-            )
-        }
-
-        // Nothing to draw for the other commands, such as NONE
-        else -> {}
+    if (drone.command == Drone.DroneCommand.PATROL) {
+        drawDiscoverRange(drone, pan, pxPerCm)
     }
+
+    drawRemainingPath(drone, pan, pxPerCm)
 }
 
 // Light grey ring showing how close a target has to be for a patrolling drone to attack it
@@ -147,14 +142,15 @@ private fun DrawScope.drawDiscoverRange(drone: Drone, pan: Offset, pxPerCm: Floa
     )
 }
 
-// Line from the drone through every point of its path it has not reached yet, pathEffect null for solid
-private fun DrawScope.drawRemainingPath(
-    drone: Drone,
-    pan: Offset,
-    pxPerCm: Float,
-    pathEffect: PathEffect?
-) {
+// Dotted line from the drone through every point of its path it has not reached yet
+private fun DrawScope.drawRemainingPath(drone: Drone, pan: Offset, pxPerCm: Float) {
     val dronePath = drone.path ?: return
+
+    // The dots start as far into their pattern as the drone has traveled, so they stay still on the field
+    val dots = PathEffect.dashPathEffect(
+        floatArrayOf(PATH_DOT_LENGTH_CM * pxPerCm, PATH_DOT_GAP_CM * pxPerCm),
+        dronePath.distanceTraveledCm * pxPerCm
+    )
 
     val start = fieldCmToPx(drone.positionCm.toOffset(), pan, pxPerCm)
     val line = Path()
@@ -172,7 +168,7 @@ private fun DrawScope.drawRemainingPath(
             width = PATH_STROKE_WIDTH_CM * pxPerCm,
             cap = StrokeCap.Round,
             join = StrokeJoin.Round,
-            pathEffect = pathEffect
+            pathEffect = dots
         )
     )
 }
@@ -184,52 +180,57 @@ private fun isBlinkedOff(explodingSeconds: Float): Boolean {
 }
 
 // Draws each kind of entity in its own look
-private fun DrawScope.drawEntity(entity: Entity, pan: Offset, pxPerCm: Float) {
+private fun DrawScope.drawEntity(entity: Entity, pan: Offset, pxPerCm: Float, icons: EntityIcons) {
     // Exploding entities blink, nothing is drawn during the hidden half of each blink
     if (entity.exploding && isBlinkedOff(entity.explodingSeconds)) {
         return
     }
 
     when (entity) {
-        is Drone -> drawDrone(entity, pan, pxPerCm)
-        is Target -> drawTarget(entity, pan, pxPerCm)
+        is Drone -> drawDrone(entity, pan, pxPerCm, icons)
+        is Target -> drawTarget(entity, pan, pxPerCm, icons)
     }
 }
 
-// Circle, size is the diameter in cm
-private fun DrawScope.drawDrone(drone: Drone, pan: Offset, pxPerCm: Float) {
-    val color: Long
+// Diamond icon, size is the width and height in cm
+private fun DrawScope.drawDrone(drone: Drone, pan: Offset, pxPerCm: Float, icons: EntityIcons) {
+    val painter: Painter
 
     if (drone.selected) {
-        color = DRONE_SELECTED_COLOR
+        painter = icons.droneSelected
     } else {
-        color = DRONE_COLOR
+        painter = icons.droneUnselected
     }
 
-    drawCircle(
-        Color(color),
-        radius = drone.sizeCm * pxPerCm / 2,
-        center = fieldCmToPx(drone.positionCm.toOffset(), pan, pxPerCm)
-    )
+    val sizePx = drone.sizeCm * pxPerCm
+    val center = fieldCmToPx(drone.positionCm.toOffset(), pan, pxPerCm)
+
+    // Painters draw from their top left corner, so move back half the size from the center
+    translate(center.x - sizePx / 2, center.y - sizePx / 2) {
+        with(painter) {
+            draw(Size(sizePx, sizePx))
+        }
+    }
 }
 
-// Square, size is the side length in cm
-private fun DrawScope.drawTarget(target: Target, pan: Offset, pxPerCm: Float) {
-    val color: Long
+// Rectangle icon, size is the width in cm and the height keeps the image's shape
+private fun DrawScope.drawTarget(target: Target, pan: Offset, pxPerCm: Float, icons: EntityIcons) {
+    val painter: Painter
 
     if (target.selected) {
-        color = TARGET_SELECTED_COLOR
+        painter = icons.targetSelected
     } else {
-        color = TARGET_COLOR
+        painter = icons.targetUnselected
     }
 
-    val sizePx = target.sizeCm * pxPerCm
+    val widthPx = target.sizeCm * pxPerCm
+    val heightPx = widthPx * painter.intrinsicSize.height / painter.intrinsicSize.width
     val center = fieldCmToPx(target.positionCm.toOffset(), pan, pxPerCm)
 
-    // drawRect starts in the top left corner, so move back half the size from the center
-    drawRect(
-        Color(color),
-        topLeft = center - Offset(sizePx / 2, sizePx / 2),
-        size = Size(sizePx, sizePx)
-    )
+    // Painters draw from their top left corner, so move back half the size from the center
+    translate(center.x - widthPx / 2, center.y - heightPx / 2) {
+        with(painter) {
+            draw(Size(widthPx, heightPx))
+        }
+    }
 }

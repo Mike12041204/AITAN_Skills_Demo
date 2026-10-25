@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Coordinated attack button, three drones around the top left corner attacking one target in the bottom right -->
+<!-- The corner drone goes straight, the drones to its right and below it weave -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="100dp"
+    android:height="100dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <!-- Drone diamonds, in the corner, to its right and below it -->
+    <path
+        android:fillColor="#616161"
+        android:pathData="M16,4 L28,16 L16,28 L4,16 Z M52,4 L64,16 L52,28 L40,16 Z M16,40 L28,52 L16,64 L4,52 Z" />
+
+    <!-- Target rectangle -->
+    <path
+        android:fillColor="#616161"
+        android:pathData="M68,68 L92,68 L92,92 L68,92 Z" />
+
+    <!-- Solid straight line from the corner drone to the middle of the target -->
+    <path
+        android:strokeColor="#616161"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M20,20 L70,70" />
+
+    <!-- Smooth wave from the drone to the right, ends in the top right of the target -->
+    <path
+        android:strokeColor="#616161"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M56,16 L58.9,18.9 Q53.8,29.3 61.75,33.25 T66.5,45.5 T71.25,57.75 T76,70" />
+
+    <!-- Smooth wave from the drone below, ends in the bottom left of the target -->
+    <path
+        android:strokeColor="#616161"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M16,56 L18.9,58.9 Q29.3,53.8 33.25,61.75 T45.5,66.5 T57.75,71.25 T70,76" />
+</vector>

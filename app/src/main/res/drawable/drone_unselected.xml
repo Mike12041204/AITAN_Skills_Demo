@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Drone symbol when unselected, light blue diamond with a dark blue chevron -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="600dp"
+    android:height="600dp"
+    android:viewportWidth="600"
+    android:viewportHeight="600">
+
+    <!-- Diamond -->
+    <path
+        android:fillColor="#90CAF9"
+        android:pathData="M300,0 L600,300 L300,600 L0,300 Z" />
+
+    <!-- Chevron -->
+    <path
+        android:fillColor="#1E88E5"
+        android:pathData="M122,195 L300,228 L478,195 L476,205 L300,280 L124,205 Z" />
+</vector>

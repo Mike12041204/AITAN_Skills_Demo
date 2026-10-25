@@ -4,6 +4,7 @@ import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -29,6 +30,8 @@ private const val BUTTON_SIZE_CM = 0.9f
 private const val BUTTON_SPACING_CM = 0.15f
 private const val ICON_PADDING_CM = 0.15f
 
+private const val BUTTON_BORDER_WIDTH_CM = 0.03f
+private const val BUTTON_BORDER_COLOR = 0xFF616161L // Dark gray
 private const val BUTTON_COLOR = 0xFFE0E0E0L       // Light gray
 private const val BUTTON_FLASH_COLOR = 0xFF64B5F6L // Blue
 private const val BUTTON_FAIL_COLOR = 0xFFE57373L  // Red
@@ -88,6 +91,7 @@ private fun HotbarButton(action: HotbarAction, viewModel: HotbarViewModel) {
         modifier = Modifier
             .size(cmToDp(BUTTON_SIZE_CM))
             .background(background.value)
+            .border(cmToDp(BUTTON_BORDER_WIDTH_CM), Color(BUTTON_BORDER_COLOR))
             .clickable {
                 // Runs the action if its condition is met, otherwise shows its fail message
                 val actionRan = viewModel.onActionTapped(action)

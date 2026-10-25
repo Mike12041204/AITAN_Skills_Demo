@@ -17,9 +17,17 @@ public abstract class DronePath {
     // Index in points of where the drone is heading next
     private int nextPointIndex;
 
+    // How far the drone has moved along this path in total, the UI uses it to keep dotted lines still
+    private float distanceTraveledCm;
+
     protected DronePath(boolean loops) {
         this.loops = loops;
         this.nextPointIndex = 1;
+        this.distanceTraveledCm = 0f;
+    }
+
+    public float getDistanceTraveledCm() {
+        return distanceTraveledCm;
     }
 
     // Adds a point to the end of the path, kept inside the field so drones never leave it
@@ -69,6 +77,9 @@ public abstract class DronePath {
                 remainingCm = 0;
             }
         }
+
+        // Whatever was not left over was traveled, including any whole laps skipped above
+        distanceTraveledCm += distanceCm - remainingCm;
 
         return position;
     }
