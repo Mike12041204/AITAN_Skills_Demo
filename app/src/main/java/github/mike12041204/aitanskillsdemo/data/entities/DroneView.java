@@ -1,6 +1,7 @@
 package github.mike12041204.aitanskillsdemo.data.entities;
 
 import androidx.annotation.Nullable;
+
 import github.mike12041204.aitanskillsdemo.data.path.DronePathView;
 
 // Read only view of a drone for the UI
