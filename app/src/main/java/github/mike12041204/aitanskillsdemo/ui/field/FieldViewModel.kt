@@ -4,9 +4,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.lifecycle.ViewModel
 import github.mike12041204.aitanskillsdemo.AppContainer
 import github.mike12041204.aitanskillsdemo.data.entities.Entity
+import github.mike12041204.aitanskillsdemo.data.field.FieldRepository
 import github.mike12041204.aitanskillsdemo.ui.toOffset
 import io.reactivex.rxjava3.core.Observable
 
@@ -26,6 +28,20 @@ class FieldViewModel : ViewModel() {
 
     // How far the field is dragged, in cm, so the view stays put across rotations
     var panCm by mutableStateOf(Offset.Zero)
+        private set
+
+    // Moves the field by drag pixels, stopping at the field edges
+    // viewportSize is the size of the screen area showing the field, in pixels
+    fun onDrag(drag: Offset, viewportSize: Size, pxPerCm: Float) {
+        val fieldWidthPx = FieldRepository.FIELD_WIDTH_CM * pxPerCm
+        val fieldHeightPx = FieldRepository.FIELD_HEIGHT_CM * pxPerCm
+        val newPanPx = panCm * pxPerCm + drag
+
+        panCm = Offset(
+            newPanPx.x.coerceIn(minOf(0f, viewportSize.width - fieldWidthPx), 0f),
+            newPanPx.y.coerceIn(minOf(0f, viewportSize.height - fieldHeightPx), 0f)
+        ) / pxPerCm
+    }
 
     // Point is in field cm, toggles the entity closest to the tap if it is close enough
     // Exploding entities are ignored so they can never be selected

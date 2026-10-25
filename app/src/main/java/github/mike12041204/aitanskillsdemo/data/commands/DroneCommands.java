@@ -49,6 +49,8 @@ public final class DroneCommands {
     // Commands, each one unselects all drones when it is done
     // All selected drones head straight for the selected target
     public void straightAttack() {
+        requireCondition(canStraightAttack(), "straightAttack");
+
         Target target = firstSelected(Target.class);
 
         for (Drone drone : allSelected(Drone.class)) {
@@ -64,6 +66,8 @@ public final class DroneCommands {
 
     // All selected drones weave toward the selected target
     public void evasiveAttack() {
+        requireCondition(canEvasiveAttack(), "evasiveAttack");
+
         Target target = firstSelected(Target.class);
 
         for (Drone drone : allSelected(Drone.class)) {
@@ -79,6 +83,8 @@ public final class DroneCommands {
 
     // All selected drones attack the selected target, mixing straight and evasive attacks
     public void coordinatedAttack() {
+        requireCondition(canCoordinatedAttack(), "coordinatedAttack");
+
         List<Drone> drones = allSelected(Drone.class);
         Target target = firstSelected(Target.class);
 
@@ -104,6 +110,8 @@ public final class DroneCommands {
 
     // All selected drones patrol where they are, patrol has no target
     public void patrol() {
+        requireCondition(canPatrol(), "patrol");
+
         for (Drone drone : allSelected(Drone.class)) {
             drone.setCommand(Drone.DroneCommand.PATROL);
             drone.setCommandTarget(null);
@@ -117,6 +125,8 @@ public final class DroneCommands {
 
     // All selected drones stop what they are doing
     public void cancel() {
+        requireCondition(canCancel(), "cancel");
+
         for (Drone drone : allSelected(Drone.class)) {
             drone.setCommand(Drone.DroneCommand.NONE);
             drone.setCommandTarget(null);
@@ -126,6 +136,13 @@ public final class DroneCommands {
         unselectAllDrones();
 
         fieldRepo.publish();
+    }
+
+    // Commands are only called after their condition is checked, so a false one is a bug
+    private void requireCondition(boolean condition, String commandName) {
+        if (!condition) {
+            throw new IllegalStateException(commandName + " called when its condition is false");
+        }
     }
 
     // How many selected entities are of the given type, for example Drone.class

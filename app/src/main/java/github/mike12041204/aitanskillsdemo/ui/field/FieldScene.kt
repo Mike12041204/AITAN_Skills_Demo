@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.toSize
 import androidx.lifecycle.viewmodel.compose.viewModel
 import github.mike12041204.aitanskillsdemo.R
 import github.mike12041204.aitanskillsdemo.data.entities.Drone
@@ -85,11 +86,7 @@ fun FieldScene(modifier: Modifier = Modifier, viewModel: FieldViewModel = viewMo
             .pointerInput(Unit) {
                 // Drag to move around the field, stopping at the field edges
                 detectDragGestures { _, drag ->
-                    val newPan = viewModel.panCm * pxPerCm + drag
-                    viewModel.panCm = Offset(
-                        newPan.x.coerceIn(minOf(0f, size.width - fieldSize.width), 0f),
-                        newPan.y.coerceIn(minOf(0f, size.height - fieldSize.height), 0f)
-                    ) / pxPerCm
+                    viewModel.onDrag(drag, size.toSize(), pxPerCm)
                 }
             }
     ) {
