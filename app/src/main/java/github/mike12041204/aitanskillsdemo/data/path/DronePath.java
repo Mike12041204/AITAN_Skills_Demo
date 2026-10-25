@@ -13,7 +13,7 @@ import java.util.List;
 public abstract class DronePath {
 
     // Points in field cm the drone moves through, in order, the first one is where the drone started
-    private final List<PointCm> points = new ArrayList<>();
+    private final List<PointCm> points;
 
     // True if the drone goes back to the first point after the last one and never finishes
     private final boolean loops;
@@ -25,6 +25,7 @@ public abstract class DronePath {
     private float distanceTraveledCm;
 
     protected DronePath(boolean loops) {
+        this.points = new ArrayList<>();
         this.loops = loops;
         // Point 0 is where the drone starts, so it heads for point 1 first
         this.nextPointIndex = 1;

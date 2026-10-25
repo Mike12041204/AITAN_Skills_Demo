@@ -1,5 +1,6 @@
 package github.mike12041204.aitanskillsdemo.data.commands;
 
+import androidx.annotation.Nullable;
 import github.mike12041204.aitanskillsdemo.data.entities.Drone;
 import github.mike12041204.aitanskillsdemo.data.entities.Entity;
 import github.mike12041204.aitanskillsdemo.data.entities.Target;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // Orders that can be given to the selected drones, each command has a condition that must be true first
-public class DroneCommands {
+public final class DroneCommands {
 
     // Coordinated attack pattern, one straight drone then this many evasive drones, repeating
     private static final int EVASIVE_DRONES_PER_STRAIGHT_DRONE = 2;
@@ -154,6 +155,7 @@ public class DroneCommands {
     }
 
     // First selected entity of the given type, or null if none is selected
+    @Nullable
     private <T extends Entity> T firstSelected(Class<T> type) {
         List<T> selected = allSelected(type);
 

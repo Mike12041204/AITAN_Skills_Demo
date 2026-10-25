@@ -9,7 +9,7 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject;
 import java.util.concurrent.TimeUnit;
 
 // Ticks a set number of times per second and updates the field on every tick
-public class SimulationClock {
+public final class SimulationClock {
 
     private static final long MICROSECONDS_PER_SECOND = 1_000_000L;
 
@@ -25,12 +25,13 @@ public class SimulationClock {
 
     // Frames run since the app started, keeps counting after a stop and start
     private long frameCount;
-    private final BehaviorSubject<Long> frameCountStream = BehaviorSubject.createDefault(0L);
+    private final BehaviorSubject<Long> frameCountStream;
 
     public SimulationClock(FieldRepository fieldRepo) {
         this.fieldRepo = fieldRepo;
         this.ticks = null;
         this.frameCount = 0L;
+        this.frameCountStream = BehaviorSubject.createDefault(0L);
     }
 
     public Observable<Long> getFrameCount() {

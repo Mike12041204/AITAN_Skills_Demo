@@ -5,9 +5,9 @@ import github.mike12041204.aitanskillsdemo.data.field.PointCm;
 import java.util.List;
 
 // What drones attack, only one target can be selected at a time
-public class Target extends Entity {
+public final class Target extends Entity {
 
-    // What the target is currently doing
+    // What the target is currently doing, placeholder until targets get commands of their own
     public enum TargetCommand {
         NONE
     }
@@ -38,6 +38,6 @@ public class Target extends Entity {
 
     // Runs the actions for the target's command, targets do not move
     @Override
-    public void updateCommand(float secondsSinceLastFrame, List<Entity> entities) {
+    protected void updateCommand(float secondsSinceLastFrame, List<Entity> entities) {
     }
 }

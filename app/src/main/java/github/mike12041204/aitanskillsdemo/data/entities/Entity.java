@@ -37,11 +37,6 @@ public abstract class Entity {
         return positionCm;
     }
 
-    // For subclasses to move themselves
-    protected void setPositionCm(PointCm positionCm) {
-        this.positionCm = positionCm;
-    }
-
     public boolean getSelected() {
         return selected;
     }
@@ -62,12 +57,17 @@ public abstract class Entity {
         return explodingSeconds;
     }
 
-    public void setSelected(boolean selected) {
-        this.selected = selected;
-    }
-
     public boolean getDeleted() {
         return deleted;
+    }
+
+    // For subclasses to move themselves
+    protected void setPositionCm(PointCm positionCm) {
+        this.positionCm = positionCm;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
     // Starts exploding, called by the entity itself or by a drone that hit it
@@ -93,5 +93,5 @@ public abstract class Entity {
     }
 
     // Called once per frame while not exploding, each kind of entity decides what its command does
-    public abstract void updateCommand(float secondsSinceLastFrame, List<Entity> entities);
+    protected abstract void updateCommand(float secondsSinceLastFrame, List<Entity> entities);
 }

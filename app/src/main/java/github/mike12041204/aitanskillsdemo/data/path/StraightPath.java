@@ -5,7 +5,7 @@ import github.mike12041204.aitanskillsdemo.data.entities.Target;
 import github.mike12041204.aitanskillsdemo.data.field.PointCm;
 
 // Straight line from the drone to its target
-public class StraightPath extends DronePath {
+public final class StraightPath extends DronePath {
 
     public StraightPath(Drone drone, Target target) {
         super(false);

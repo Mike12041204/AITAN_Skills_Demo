@@ -1,14 +1,16 @@
 package github.mike12041204.aitanskillsdemo.data.entities;
 
+import androidx.annotation.Nullable;
 import github.mike12041204.aitanskillsdemo.data.DataUtil;
 import github.mike12041204.aitanskillsdemo.data.field.PointCm;
 import github.mike12041204.aitanskillsdemo.data.path.DronePath;
 import github.mike12041204.aitanskillsdemo.data.path.StraightPath;
 
 import java.util.List;
+import java.util.Objects;
 
 // Moves around the field following commands, many drones can be selected at once
-public class Drone extends Entity {
+public final class Drone extends Entity {
 
     // What the drone is currently ordered to do
     public enum DroneCommand {
@@ -17,6 +19,9 @@ public class Drone extends Entity {
         EVASIVE_ATTACK,
         PATROL
     }
+
+    // A patrolling drone straight attacks the closest target that comes within this distance
+    public static final float PATROL_DISCOVER_DISTANCE_CM = 2.75f;
 
     // Real-life size of a drone in cm
     private static final float SIZE_CM = 0.5f;
@@ -28,8 +33,6 @@ public class Drone extends Entity {
     private static final float EXPLODE_CANCEL_DISTANCE_CM = 2f;
     // How long a drone explodes for before it deletes itself
     private static final float EXPLODE_DURATION_SECONDS = 1f;
-    // A patrolling drone straight attacks the closest target that comes within this distance
-    public static final float PATROL_DISCOVER_DISTANCE_CM = 2.75f;
 
     private DroneCommand command;
     // Target the command is aimed at, stays the same even if a different target gets selected later
@@ -53,25 +56,27 @@ public class Drone extends Entity {
         this.command = command;
     }
 
+    @Nullable
     public Target getCommandTarget() {
         return commandTarget;
     }
 
-    public void setCommandTarget(Target commandTarget) {
+    public void setCommandTarget(@Nullable Target commandTarget) {
         this.commandTarget = commandTarget;
     }
 
+    @Nullable
     public DronePath getPath() {
         return path;
     }
 
-    public void setPath(DronePath path) {
+    public void setPath(@Nullable DronePath path) {
         this.path = path;
     }
 
     // Moves the drone along its command path, then runs the actions for its command
     @Override
-    public void updateCommand(float secondsSinceLastFrame, List<Entity> entities) {
+    protected void updateCommand(float secondsSinceLastFrame, List<Entity> entities) {
         // Another drone already destroyed this target, so stop instead of flying to where it was
         if (commandTarget != null && commandTarget.getExploding()) {
             float distanceToTargetCm = DataUtil.distanceCm(getPositionCm(), commandTarget.getPositionCm());
@@ -91,6 +96,7 @@ public class Drone extends Entity {
 
         // Actions for each command, run every frame
         if (command == DroneCommand.STRAIGHT_ATTACK || command == DroneCommand.EVASIVE_ATTACK) {
+            Objects.requireNonNull(commandTarget, "Attack command has no target");
             float distanceToTargetCm = DataUtil.distanceCm(getPositionCm(), commandTarget.getPositionCm());
 
             // Close enough to the target, both explode and the drone drops its command and stops moving

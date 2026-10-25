@@ -6,7 +6,7 @@ import github.mike12041204.aitanskillsdemo.data.entities.Target;
 import github.mike12041204.aitanskillsdemo.data.field.PointCm;
 
 // Zig zags side to side on the way from the drone to its target
-public class EvasivePath extends DronePath {
+public final class EvasivePath extends DronePath {
 
     // Distance along the straight line between each corner of the zig zag
     private static final float ZIGZAG_SPACING_CM = 0.3f;

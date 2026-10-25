@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 // Owns every entity on the field and all the rules for changing them
-public class FieldRepository {
+public final class FieldRepository {
 
     // All positions and sizes in real life centimeters
     // Width and height are suggested to be at least 15
@@ -30,15 +30,20 @@ public class FieldRepository {
     private static final int NUMBER_OF_DRONES = 12;
 
     // Goes up on every change so the UI knows to redraw
-    private long version = 0L;
-    private final BehaviorSubject<Long> versionStream = BehaviorSubject.createDefault(0L);
+    private long version;
+    private final BehaviorSubject<Long> versionStream;
 
     // Entities are changed in place, the UI only ever gets the read only view
-    private final List<Entity> entities = new ArrayList<>();
-    private final List<Entity> readOnlyEntities = Collections.unmodifiableList(entities);
+    private final List<Entity> entities;
+    private final List<Entity> readOnlyEntities;
 
     // Starts the field with random targets and drones inside the allowed start area
     public FieldRepository() {
+        this.version = 0L;
+        this.versionStream = BehaviorSubject.createDefault(0L);
+        this.entities = new ArrayList<>();
+        this.readOnlyEntities = Collections.unmodifiableList(entities);
+
         for (int i = 0; i < NUMBER_OF_TARGETS; i++) {
             entities.add(new Target(randomStartPositionCm()));
         }
