@@ -1,57 +1,48 @@
 package github.mike12041204.aitanskillsdemo.data;
 
+// Anything that sits on the field, subclasses decide the size and speed, how it looks is up to the UI
 public abstract class Entity {
 
-    public enum EntityShape {
-        CIRCLE,
-        SQUARE
-    }
+    // Set once by the subclass and never change
+    private final float sizeCm;
+    private final float speedCmPerSecond;
 
-    private final EntityShape shape;
-    private final float size;
-    private final long unselectedColor;
-    private final long selectedColor;
-
-    private float xPosition;
-    private float yPosition;
+    // Can change while the app runs, position is in field cm
+    private PointCm positionCm;
     private boolean selected;
 
-    protected Entity(float xPosition, float yPosition, long unselectedColor, long selectedColor,
-                     EntityShape shape, float size) {
-        this.xPosition = xPosition;
-        this.yPosition = yPosition;
+    protected Entity(PointCm positionCm, float sizeCm, float speedCmPerSecond) {
+        this.positionCm = positionCm;
         this.selected = false;
-        this.unselectedColor = unselectedColor;
-        this.selectedColor = selectedColor;
-        this.shape = shape;
-        this.size = size;
+        this.sizeCm = sizeCm;
+        this.speedCmPerSecond = speedCmPerSecond;
     }
 
-    public float getXPosition() {
-        return xPosition;
+    public PointCm getPositionCm() {
+        return positionCm;
     }
 
-    public float getYPosition() {
-        return yPosition;
+    // Only entities can move themselves
+    protected void setPositionCm(PointCm positionCm) {
+        this.positionCm = positionCm;
     }
 
-    public boolean isSelected() {
+    public boolean getSelected() {
         return selected;
     }
 
-    public long getColor() {
-        return selected ? selectedColor : unselectedColor;
+    public float getSizeCm() {
+        return sizeCm;
     }
 
-    public EntityShape getShape() {
-        return shape;
-    }
-
-    public float getSize() {
-        return size;
+    public float getSpeedCmPerSecond() {
+        return speedCmPerSecond;
     }
 
     public void setSelected(boolean selected) {
         this.selected = selected;
     }
+
+    // Called once per frame, each kind of entity decides what it does over time
+    abstract void update(float secondsSinceLastFrame);
 }

@@ -8,32 +8,49 @@ import java.util.stream.Stream;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
+// Owns every entity on the field and all the rules for changing them
 public class FieldRepository {
 
     // All positions and sizes in real life centimeters
-    public static final float FIELD_WIDTH = 10f;
-    public static final float FIELD_HEIGHT = 18f;
+    public static final float FIELD_WIDTH_CM = 10f;
+    public static final float FIELD_HEIGHT_CM = 18f;
+
     // For example, 6 means that entities won't generate in the outer 1/6 edges of the field
     public static final float EXCLUDED_BAND_DIVISOR = 6f;
-    public static final float MIN_X_ENTITY_START = FIELD_WIDTH / EXCLUDED_BAND_DIVISOR;
-    public static final float MAX_X_ENTITY_START = FIELD_WIDTH - MIN_X_ENTITY_START;
-    public static final float MIN_Y_ENTITY_START = FIELD_HEIGHT / EXCLUDED_BAND_DIVISOR;
-    public static final float MAX_Y_ENTITY_START = FIELD_HEIGHT - MIN_Y_ENTITY_START;
+    public static final float MIN_X_ENTITY_START_CM = FIELD_WIDTH_CM / EXCLUDED_BAND_DIVISOR;
+    public static final float MAX_X_ENTITY_START_CM = FIELD_WIDTH_CM - MIN_X_ENTITY_START_CM;
+    public static final float MIN_Y_ENTITY_START_CM = FIELD_HEIGHT_CM / EXCLUDED_BAND_DIVISOR;
+    public static final float MAX_Y_ENTITY_START_CM = FIELD_HEIGHT_CM - MIN_Y_ENTITY_START_CM;
 
     private static final int NUMBER_OF_TARGETS = 2;
     private static final int NUMBER_OF_DRONES = 5;
 
+    // Goes up on every change so the UI knows to redraw
     private long version = 0L;
     private final BehaviorSubject<Long> versionStream = BehaviorSubject.createDefault(0L);
 
+    // Entities are changed in place, the UI only ever gets the read only view
     private final List<Entity> entities = new ArrayList<>();
     private final List<Entity> readOnlyEntities = Collections.unmodifiableList(entities);
 
+    // Starts the field with random targets and drones inside the allowed start area
     public FieldRepository() {
-        Stream.generate(() -> new Target(DataUtil.randomFloat(MIN_X_ENTITY_START, MAX_X_ENTITY_START), DataUtil.randomFloat(MIN_Y_ENTITY_START, MAX_Y_ENTITY_START))).limit(NUMBER_OF_TARGETS).forEach(entities::add);
-        Stream.generate(() -> new Drone(DataUtil.randomFloat(MIN_X_ENTITY_START, MAX_X_ENTITY_START), DataUtil.randomFloat(MIN_Y_ENTITY_START, MAX_Y_ENTITY_START))).limit(NUMBER_OF_DRONES).forEach(entities::add);
+        Stream.generate(() -> new Target(randomStartPositionCm()))
+                .limit(NUMBER_OF_TARGETS)
+                .forEach(entities::add);
+
+        Stream.generate(() -> new Drone(randomStartPositionCm()))
+                .limit(NUMBER_OF_DRONES)
+                .forEach(entities::add);
 
         publish();
+    }
+
+    // Random point inside the allowed start area
+    private static PointCm randomStartPositionCm() {
+        return new PointCm(
+                DataUtil.randomFloat(MIN_X_ENTITY_START_CM, MAX_X_ENTITY_START_CM),
+                DataUtil.randomFloat(MIN_Y_ENTITY_START_CM, MAX_Y_ENTITY_START_CM));
     }
 
     public Observable<Long> getVersion() {
@@ -44,8 +61,9 @@ public class FieldRepository {
         return readOnlyEntities;
     }
 
+    // Selects an unselected entity or unselects a selected one
     public void toggleSelection(Entity entity) {
-        entity.setSelected(!entity.isSelected());
+        entity.setSelected(!entity.getSelected());
 
         // Only one target can be selected at a time
         if (entity instanceof Target) {
@@ -59,7 +77,18 @@ public class FieldRepository {
         publish();
     }
 
-    private void publish() {
+    // Called by SimulationClock once per frame, updates every entity then redraws the field once
+    void update(float secondsSinceLastFrame) {
+        for (Entity entity : entities) {
+            entity.update(secondsSinceLastFrame);
+        }
+
+        publish();
+    }
+
+    // Tells the UI the field changed, call this at the end of anything that changes entities
+    // Package private (defualt / no visibility) so DroneCommands in the same package can call it
+    void publish() {
         versionStream.onNext(++version);
     }
 }

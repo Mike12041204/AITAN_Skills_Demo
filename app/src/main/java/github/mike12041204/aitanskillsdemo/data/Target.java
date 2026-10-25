@@ -1,14 +1,20 @@
 package github.mike12041204.aitanskillsdemo.data;
 
+// What drones attack, only one target can be selected at a time
 public class Target extends Entity {
 
-    private static final EntityShape SHAPE = EntityShape.SQUARE;
-    // Size of entity in cm as it will be drawn on screen
-    private static final float SIZE = 0.5f;
-    private static final long UNSELECTED_COLOR = 0xFFFFCC80L; // light orange
-    private static final long SELECTED_COLOR = 0xFFFB8C00L;   // orange
+    // Real life size of a target in cm
+    private static final float SIZE_CM = 0.5f;
 
-    public Target(float xPosition, float yPosition) {
-        super(xPosition, yPosition, UNSELECTED_COLOR, SELECTED_COLOR, SHAPE, SIZE);
+    // Targets stay where they are for now
+    private static final float SPEED_CM_PER_SECOND = 0f;
+
+    public Target(PointCm positionCm) {
+        super(positionCm, SIZE_CM, SPEED_CM_PER_SECOND);
+    }
+
+    // Targets do not move or change over time
+    @Override
+    void update(float secondsSinceLastFrame) {
     }
 }
