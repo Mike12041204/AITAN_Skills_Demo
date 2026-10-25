@@ -30,19 +30,27 @@ public abstract class DronePath {
     }
 
     // True once the drone has reached the last point, looping paths never finish
-    public boolean isFinished() {
+    /* package */ boolean isFinished() {
         return !loops && nextPointIndex >= points.size();
     }
 
     // Moves from position along the path by distanceCm, returns where it ends up
-    public PointCm advance(PointCm position, float distanceCm) {
+    /* package */ PointCm advance(PointCm position, float distanceCm) {
         float remainingCm = distanceCm;
 
-        // MBG - This seems like a bad way to do this as a low frame rate thing with a short path would stop when it shouldn't
-        // Stops after one full lap in a single frame so a path with no length can never loop forever
-        int pointsReached = 0;
+        if (loops) {
+            float loopLengthCm = getLoopLengthCm();
 
-        while (remainingCm > 0 && !isFinished() && pointsReached <= points.size()) {
+            // A loop with no length has nowhere to go, this also keeps the loop below from running forever
+            if (loopLengthCm == 0) {
+                return position;
+            }
+
+            // Whole laps end exactly where they started, so only the distance left after them matters
+            remainingCm = remainingCm % loopLengthCm;
+        }
+
+        while (remainingCm > 0 && !isFinished()) {
             PointCm next = points.get(nextPointIndex);
             float toNextCm = DataUtil.distanceCm(position, next);
 
@@ -50,7 +58,6 @@ public abstract class DronePath {
                 // Reach the next point and keep going with the distance left over
                 position = next;
                 remainingCm -= toNextCm;
-                pointsReached++;
                 nextPointIndex++;
 
                 if (loops && nextPointIndex >= points.size()) {
@@ -82,5 +89,17 @@ public abstract class DronePath {
         }
 
         return Collections.unmodifiableList(remaining);
+    }
+
+    // Length of one full lap of a looping path, including the way from the last point back to the first
+    private float getLoopLengthCm() {
+        float lengthCm = 0;
+
+        for (int i = 0; i < points.size(); i++) {
+            PointCm next = points.get((i + 1) % points.size());
+            lengthCm += DataUtil.distanceCm(points.get(i), next);
+        }
+
+        return lengthCm;
     }
 }

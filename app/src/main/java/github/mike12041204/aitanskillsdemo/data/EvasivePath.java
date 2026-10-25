@@ -1,14 +1,14 @@
 package github.mike12041204.aitanskillsdemo.data;
 
 // Zig zags side to side on the way from the drone to its target
-public class EvasivePath extends DronePath {
+/* package */ class EvasivePath extends DronePath {
 
     // Distance along the straight line between each corner of the zig zag
     private static final float ZIGZAG_SPACING_CM = 0.3f;
     // How far each corner is pushed out to the side of the straight line
     private static final float ZIGZAG_WIDTH_CM = 0.3f;
 
-    public EvasivePath(Drone drone, Target target) {
+    /* package */ EvasivePath(Drone drone, Target target) {
         super(false);
 
         PointCm start = drone.getPositionCm();
@@ -17,7 +17,7 @@ public class EvasivePath extends DronePath {
 
         addPoint(start.getXCm(), start.getYCm());
 
-        // Only zig zag if there is room, otherwise go straight to the target
+        // Only zigzag if there is room, otherwise go straight to the target
         if (lengthCm > 0) {
             // Direction along the straight line, and sideways at a right angle to it
             float alongX = (end.getXCm() - start.getXCm()) / lengthCm;

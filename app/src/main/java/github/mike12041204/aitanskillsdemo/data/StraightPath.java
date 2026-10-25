@@ -1,9 +1,9 @@
 package github.mike12041204.aitanskillsdemo.data;
 
 // Straight line from the drone to its target
-public class StraightPath extends DronePath {
+/* package */ class StraightPath extends DronePath {
 
-    public StraightPath(Drone drone, Target target) {
+    /* package */ StraightPath(Drone drone, Target target) {
         super(false);
 
         PointCm start = drone.getPositionCm();

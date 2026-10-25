@@ -27,8 +27,10 @@ class FieldViewModel : ViewModel() {
     var panCm by mutableStateOf(Offset.Zero)
 
     // Point is in field cm, toggles the entity closest to the tap if it is close enough
+    // Exploding entities are ignored so they can never be selected
     fun onFieldTapped(point: Offset) {
         entities
+            .filter { !it.exploding }
             .filter { distanceCm(it, point) <= maxOf(it.sizeCm / 2, MIN_TAP_RADIUS_CM) }
             .minByOrNull { distanceCm(it, point) }
             ?.let {

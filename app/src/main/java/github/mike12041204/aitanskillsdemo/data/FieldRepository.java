@@ -16,11 +16,11 @@ public class FieldRepository {
     public static final float FIELD_HEIGHT_CM = 18f;
 
     // For example, 6 means that entities won't generate in the outer 1/6 edges of the field
-    public static final float EXCLUDED_BAND_DIVISOR = 6f;
-    public static final float MIN_X_ENTITY_START_CM = FIELD_WIDTH_CM / EXCLUDED_BAND_DIVISOR;
-    public static final float MAX_X_ENTITY_START_CM = FIELD_WIDTH_CM - MIN_X_ENTITY_START_CM;
-    public static final float MIN_Y_ENTITY_START_CM = FIELD_HEIGHT_CM / EXCLUDED_BAND_DIVISOR;
-    public static final float MAX_Y_ENTITY_START_CM = FIELD_HEIGHT_CM - MIN_Y_ENTITY_START_CM;
+    private static final float EXCLUDED_BAND_DIVISOR = 6f;
+    private static final float MIN_X_ENTITY_START_CM = FIELD_WIDTH_CM / EXCLUDED_BAND_DIVISOR;
+    private static final float MAX_X_ENTITY_START_CM = FIELD_WIDTH_CM - MIN_X_ENTITY_START_CM;
+    private static final float MIN_Y_ENTITY_START_CM = FIELD_HEIGHT_CM / EXCLUDED_BAND_DIVISOR;
+    private static final float MAX_Y_ENTITY_START_CM = FIELD_HEIGHT_CM - MIN_Y_ENTITY_START_CM;
 
     private static final int NUMBER_OF_TARGETS = 2;
     private static final int NUMBER_OF_DRONES = 5;
@@ -78,17 +78,20 @@ public class FieldRepository {
     }
 
     // Called by SimulationClock once per frame, updates every entity then redraws the field once
-    void update(float secondsSinceLastFrame) {
+    /* package */ void update(float secondsSinceLastFrame) {
         for (Entity entity : entities) {
-            entity.update(secondsSinceLastFrame);
+            entity.update(secondsSinceLastFrame, readOnlyEntities);
         }
+
+        // Removed after the loop because changing a list while looping over it crashes
+        entities.removeIf(Entity::getDeleted);
 
         publish();
     }
 
     // Tells the UI the field changed, call this at the end of anything that changes entities
-    // Package private (defualt / no visibility) so DroneCommands in the same package can call it
-    void publish() {
+    // DroneCommands in the same package calls this too
+    /* package */ void publish() {
         versionStream.onNext(++version);
     }
 }

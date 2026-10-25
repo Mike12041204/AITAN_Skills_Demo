@@ -1,13 +1,13 @@
 package github.mike12041204.aitanskillsdemo.data;
 
 // Loops around a circle that the drone is already on when the patrol starts
-public class PatrolPath extends DronePath {
+/* package */ class PatrolPath extends DronePath {
 
-    private static final float PATROL_RADIUS_CM = 0.4f;
+    private static final float PATROL_RADIUS_CM = 2f;
     // More points make a smoother circle
     private static final int PATROL_POINT_COUNT = 50;
 
-    public PatrolPath(Drone drone) {
+    /* package */ PatrolPath(Drone drone) {
         super(true);
 
         PointCm start = drone.getPositionCm();

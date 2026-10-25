@@ -13,9 +13,9 @@ public class SimulationClock {
     private static final long MICROSECONDS_PER_SECOND = 1_000_000L;
 
     // How many times per second drones update their positions
-    public static final int FRAMES_PER_SECOND = 30;
-    public static final long FRAME_DURATION_US = MICROSECONDS_PER_SECOND / FRAMES_PER_SECOND;
-    public static final float FRAME_DURATION_SECONDS = (float) FRAME_DURATION_US / MICROSECONDS_PER_SECOND;
+    private static final int FRAMES_PER_SECOND = 30;
+    private static final long FRAME_DURATION_US = MICROSECONDS_PER_SECOND / FRAMES_PER_SECOND;
+    private static final float FRAME_DURATION_SECONDS = (float) FRAME_DURATION_US / MICROSECONDS_PER_SECOND;
 
     private final FieldRepository fieldRepo;
 

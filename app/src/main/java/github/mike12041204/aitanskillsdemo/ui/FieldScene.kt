@@ -29,14 +29,18 @@ private const val BORDER_COLOR = 0xFF79747EL // Gray
 private const val GRID_COLOR = 0xFFCAC4D0L   // Light gray
 
 private const val PATH_STROKE_WIDTH_CM = 0.03f
-private const val PATH_COLOR = 0xFF1E88E5L   // Blue
-private const val PATH_DOT_LENGTH_CM = 0.01f
-private const val PATH_DOT_GAP_CM = 0.1f
+private const val PATH_COLOR = 0xFF757575L   // Gray
+private const val PATH_DASH_LENGTH_CM = 0.15f
+private const val PATH_DASH_GAP_CM = 0.1f
+private const val DISCOVER_RANGE_COLOR = 0xFFBDBDBDL // Light gray
 
 private const val DRONE_COLOR = 0xFF90CAF9L            // Light blue
 private const val DRONE_SELECTED_COLOR = 0xFF1E88E5L   // Blue
 private const val TARGET_COLOR = 0xFFFFCC80L           // Light orange
 private const val TARGET_SELECTED_COLOR = 0xFFFB8C00L  // Orange
+
+// How many times per second an exploding entity blinks off and back on
+private const val EXPLODE_BLINKS_PER_SECOND = 6f
 
 // Draws the field at real life size and lets the user tap entities and drag around
 @Composable
@@ -108,34 +112,39 @@ private fun DrawScope.drawGrid(pan: Offset, fieldSize: Size, pxPerCm: Float) {
 private fun DrawScope.drawDroneCommand(drone: Drone, pan: Offset, pxPerCm: Float) {
     when (drone.command) {
         // Solid line
-        Drone.DroneCommand.STRAIGHT_ATTACK -> drawRemainingPath(
+        Drone.DroneCommand.STRAIGHT_ATTACK, Drone.DroneCommand.EVASIVE_ATTACK -> drawRemainingPath(
             drone,
             pan,
             pxPerCm,
             null
         )
 
-        // Dotted line
-        Drone.DroneCommand.EVASIVE_ATTACK -> drawRemainingPath(
-            drone,
-            pan,
-            pxPerCm,
-            PathEffect.dashPathEffect(
-                floatArrayOf(PATH_DOT_LENGTH_CM * pxPerCm, PATH_DOT_GAP_CM * pxPerCm)
+        // Dashed loop with the discover range around the drone
+        Drone.DroneCommand.PATROL -> {
+            drawDiscoverRange(drone, pan, pxPerCm)
+            drawRemainingPath(
+                drone,
+                pan,
+                pxPerCm,
+                PathEffect.dashPathEffect(
+                    floatArrayOf(PATH_DASH_LENGTH_CM * pxPerCm, PATH_DASH_GAP_CM * pxPerCm)
+                )
             )
-        )
-
-        // Solid loop
-        Drone.DroneCommand.PATROL -> drawRemainingPath(
-            drone,
-            pan,
-            pxPerCm,
-            null
-        )
+        }
 
         // Nothing to draw for the other commands, such as NONE
         else -> {}
     }
+}
+
+// Light grey ring showing how close a target has to be for a patrolling drone to attack it
+private fun DrawScope.drawDiscoverRange(drone: Drone, pan: Offset, pxPerCm: Float) {
+    drawCircle(
+        Color(DISCOVER_RANGE_COLOR),
+        radius = Drone.PATROL_DISCOVER_DISTANCE_CM * pxPerCm,
+        center = fieldCmToPx(drone.positionCm.toOffset(), pan, pxPerCm),
+        style = Stroke(PATH_STROKE_WIDTH_CM * pxPerCm)
+    )
 }
 
 // Line from the drone through every point of its path it has not reached yet, pathEffect null for solid
@@ -168,8 +177,19 @@ private fun DrawScope.drawRemainingPath(
     )
 }
 
+// True during the hidden half of each blink, so an exploding entity starts visible
+private fun isBlinkedOff(explodingSeconds: Float): Boolean {
+    val halfBlinks = (explodingSeconds * EXPLODE_BLINKS_PER_SECOND * 2).toInt()
+    return halfBlinks % 2 == 1
+}
+
 // Draws each kind of entity in its own look
 private fun DrawScope.drawEntity(entity: Entity, pan: Offset, pxPerCm: Float) {
+    // Exploding entities blink, nothing is drawn during the hidden half of each blink
+    if (entity.exploding && isBlinkedOff(entity.explodingSeconds)) {
+        return
+    }
+
     when (entity) {
         is Drone -> drawDrone(entity, pan, pxPerCm)
         is Target -> drawTarget(entity, pan, pxPerCm)
