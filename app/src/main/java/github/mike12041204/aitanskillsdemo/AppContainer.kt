@@ -1,8 +1,8 @@
 package github.mike12041204.aitanskillsdemo
 
-import github.mike12041204.aitanskillsdemo.data.SimulationClock
 import github.mike12041204.aitanskillsdemo.data.commands.DroneCommands
 import github.mike12041204.aitanskillsdemo.data.field.FieldRepository
+import github.mike12041204.aitanskillsdemo.data.field.SimulationClock
 
 // Single shared instances so every ViewModel works with the same data
 object AppContainer {

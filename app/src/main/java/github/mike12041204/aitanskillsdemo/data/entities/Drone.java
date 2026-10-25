@@ -78,7 +78,7 @@ public final class Drone extends Entity {
     @Override
     protected void updateCommand(float secondsSinceLastFrame, List<Entity> entities) {
         // Another drone already destroyed this target, so stop instead of flying to where it was
-        if (commandTarget != null && commandTarget.getExploding()) {
+        if (commandTarget != null && commandTarget.isExploding()) {
             float distanceToTargetCm = DataUtil.distanceCm(getPositionCm(), commandTarget.getPositionCm());
 
             // If the drone is already close keep going and explode with it
@@ -133,7 +133,7 @@ public final class Drone extends Entity {
         float closestDistanceCm = maxDistanceCm;
 
         for (Entity entity : entities) {
-            if (entity instanceof Target && !entity.getExploding()) {
+            if (entity instanceof Target && !entity.isExploding()) {
                 float distanceCm = DataUtil.distanceCm(getPositionCm(), entity.getPositionCm());
 
                 if (distanceCm <= closestDistanceCm) {

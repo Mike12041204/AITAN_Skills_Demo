@@ -31,7 +31,7 @@ class FieldViewModel : ViewModel() {
     // Exploding entities are ignored so they can never be selected
     fun onFieldTapped(point: Offset) {
         entities
-            .filter { !it.exploding }
+            .filter { !it.isExploding }
             .filter { distanceCm(it, point) <= maxOf(it.sizeCm / 2, MIN_TAP_RADIUS_CM) }
             .minByOrNull { distanceCm(it, point) }
             ?.let {

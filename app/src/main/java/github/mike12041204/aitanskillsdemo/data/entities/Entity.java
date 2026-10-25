@@ -37,7 +37,7 @@ public abstract class Entity {
         return positionCm;
     }
 
-    public boolean getSelected() {
+    public boolean isSelected() {
         return selected;
     }
 
@@ -49,7 +49,7 @@ public abstract class Entity {
         return speedCmPerSecond;
     }
 
-    public boolean getExploding() {
+    public boolean isExploding() {
         return exploding;
     }
 
@@ -57,7 +57,7 @@ public abstract class Entity {
         return explodingSeconds;
     }
 
-    public boolean getDeleted() {
+    public boolean isDeleted() {
         return deleted;
     }
 

@@ -133,7 +133,7 @@ public final class DroneCommands {
         int count = 0;
 
         for (Entity entity : fieldRepo.getEntities()) {
-            if (entity.getSelected() && type.isInstance(entity)) {
+            if (entity.isSelected() && type.isInstance(entity)) {
                 count++;
             }
         }
@@ -146,7 +146,7 @@ public final class DroneCommands {
         List<T> selected = new ArrayList<>();
 
         for (Entity entity : fieldRepo.getEntities()) {
-            if (entity.getSelected() && type.isInstance(entity)) {
+            if (entity.isSelected() && type.isInstance(entity)) {
                 selected.add(type.cast(entity));
             }
         }

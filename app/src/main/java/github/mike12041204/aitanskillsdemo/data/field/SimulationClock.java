@@ -1,6 +1,5 @@
-package github.mike12041204.aitanskillsdemo.data;
+package github.mike12041204.aitanskillsdemo.data.field;
 
-import github.mike12041204.aitanskillsdemo.data.field.FieldRepository;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.Disposable;

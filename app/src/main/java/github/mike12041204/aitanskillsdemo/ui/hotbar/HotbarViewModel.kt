@@ -1,6 +1,5 @@
 package github.mike12041204.aitanskillsdemo.ui.hotbar
 
-import androidx.annotation.DrawableRes
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -8,15 +7,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import github.mike12041204.aitanskillsdemo.AppContainer
 import github.mike12041204.aitanskillsdemo.R
-
-// What one hotbar button does, onClick runs when tapped if condition is true, otherwise failMessage is shown
-data class HotbarAction(
-    @DrawableRes val icon: Int,
-    val description: String,
-    val failMessage: String,
-    val condition: () -> Boolean,
-    val onClick: () -> Unit
-)
 
 // Holds the hotbar buttons and connects them to the field
 class HotbarViewModel : ViewModel() {

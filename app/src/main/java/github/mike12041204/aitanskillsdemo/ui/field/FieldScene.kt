@@ -186,7 +186,7 @@ private fun isBlinkedOff(explodingSeconds: Float): Boolean {
 // Draws each kind of entity in its own look
 private fun DrawScope.drawEntity(entity: Entity, pan: Offset, pxPerCm: Float, icons: EntityIcons) {
     // Exploding entities blink, nothing is drawn during the hidden half of each blink
-    if (entity.exploding && isBlinkedOff(entity.explodingSeconds)) {
+    if (entity.isExploding && isBlinkedOff(entity.explodingSeconds)) {
         return
     }
 
@@ -200,7 +200,7 @@ private fun DrawScope.drawEntity(entity: Entity, pan: Offset, pxPerCm: Float, ic
 private fun DrawScope.drawDrone(drone: Drone, pan: Offset, pxPerCm: Float, icons: EntityIcons) {
     val painter: Painter
 
-    if (drone.selected) {
+    if (drone.isSelected) {
         painter = icons.droneSelected
     } else {
         painter = icons.droneUnselected
@@ -221,7 +221,7 @@ private fun DrawScope.drawDrone(drone: Drone, pan: Offset, pxPerCm: Float, icons
 private fun DrawScope.drawTarget(target: Target, pan: Offset, pxPerCm: Float, icons: EntityIcons) {
     val painter: Painter
 
-    if (target.selected) {
+    if (target.isSelected) {
         painter = icons.targetSelected
     } else {
         painter = icons.targetUnselected

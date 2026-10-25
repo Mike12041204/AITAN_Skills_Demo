@@ -72,7 +72,7 @@ public final class FieldRepository {
 
     // Selects an unselected entity or unselects a selected one
     public void toggleSelection(Entity entity) {
-        entity.setSelected(!entity.getSelected());
+        entity.setSelected(!entity.isSelected());
 
         // Only one target can be selected at a time
         if (entity instanceof Target) {
@@ -93,7 +93,7 @@ public final class FieldRepository {
         }
 
         // Removed after the loop because changing a list while looping over it crashes
-        entities.removeIf(Entity::getDeleted);
+        entities.removeIf(Entity::isDeleted);
 
         publish();
     }
